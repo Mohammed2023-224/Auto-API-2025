@@ -2,8 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-src/main/resources/archetype-resources/
-src/main/resources/META-INF.maven/
+/src/main/resources/archetype-resources/
+/src/main/resources/META-INF.maven/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
