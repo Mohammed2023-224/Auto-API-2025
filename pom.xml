@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.example</groupId>
+  <artifactId>NewParaBank</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Archetype - NewParaBank</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <Selenium.version>4.28.1</Selenium.version>
+    <TestNG.version>7.10.2</TestNG.version>
+    <MavenSureFire.version>3.5.2</MavenSureFire.version>
+    <RestAssured.version>5.5.0</RestAssured.version>
+    <Log4jAPI.version>3.0.0-beta2</Log4jAPI.version>
+    <Log4jCore.version>3.0.0-beta3</Log4jCore.version>
+    <Allure.version>2.29.1</Allure.version>
+    <ChainTest.version>1.0.6</ChainTest.version>
+  </properties>
+
+  <profiles></profiles>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${MavenSureFire.version}</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${TestNG.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${Selenium.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>${Allure.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${Log4jAPI.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${Log4jCore.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${RestAssured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.aventstack/chaintest-testng -->
+    <dependency>
+      <groupId>com.aventstack</groupId>
+      <artifactId>chaintest-testng</artifactId>
+      <version>${ChainTest.version}</version>
+    </dependency>
+
+  </dependencies>
+
+</project>
