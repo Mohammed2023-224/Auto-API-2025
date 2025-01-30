@@ -3,7 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 /src/main/resources/archetype-resources/
-/src/main/resources/META-INF.maven/
+/src/main/resources/META-INF.maven/archetype.xml
 /.idea/
 
 ### IntelliJ IDEA ###
