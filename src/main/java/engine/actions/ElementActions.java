@@ -3,6 +3,7 @@ package engine.actions;
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class ElementActions {
@@ -13,6 +14,32 @@ public static void clickElement(WebDriver driver, By locator){
     driver.findElement(locator).click();
     CustomLogger.logger.info("Clicking element: {}",locator);
 }
+
+    public static void doubleClickElement(WebDriver driver, By locator){
+        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        WaitActions.explicitWaitByCondition(driver,locator,"clickable",5);
+        new Actions(driver).doubleClick(driver.findElement(locator)).perform();
+        CustomLogger.logger.info(" double Clicking element: {}",locator);
+    }
+
+    public static void contextClickElement(WebDriver driver, By locator){
+        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        WaitActions.explicitWaitByCondition(driver,locator,"clickable",5);
+        new Actions(driver).contextClick(driver.findElement(locator)).perform();
+        CustomLogger.logger.info(" right Clicking element: {}",locator);
+    }
+    public static void hoverOverElement(WebDriver driver, By locator){
+        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        new Actions(driver).moveToElement(driver.findElement(locator)).perform();
+        CustomLogger.logger.info(" hover over element: {}",locator);
+    }
+
+    public static void dragAndDrop(WebDriver driver, By locatorSource,By locatorTarget){
+        WaitActions.explicitWaitByCondition(driver,locatorSource,"visible",5);
+        WaitActions.explicitWaitByCondition(driver,locatorTarget,"visible",5);
+        new Actions(driver).dragAndDrop(driver.findElement(locatorSource),driver.findElement(locatorTarget)).perform();
+        CustomLogger.logger.info(" drag element from {} to {}",locatorSource,locatorTarget);
+    }
 
     public static void typeInElement(WebDriver driver, By locator,String text){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
