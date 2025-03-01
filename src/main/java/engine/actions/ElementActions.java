@@ -2,6 +2,7 @@ package engine.actions;
 
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -46,6 +47,12 @@ public static void clickElement(WebDriver driver, By locator){
     driver.findElement(locator).clear();
     driver.findElement(locator).sendKeys(text);
         CustomLogger.logger.info("typing {} in element: {}",text,locator);
+    }
+
+    public static void pressKey(WebDriver driver, By locator,Keys key){
+        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        driver.findElement(locator).sendKeys(key);
+        CustomLogger.logger.info("pressing the {} key",key);
     }
 
     public static void selectDDLOption(WebDriver driver, By locator,String option){
