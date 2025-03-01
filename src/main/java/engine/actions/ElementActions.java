@@ -2,6 +2,7 @@ package engine.actions;
 
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -15,6 +16,12 @@ public static void clickElement(WebDriver driver, By locator){
     driver.findElement(locator).click();
     CustomLogger.logger.info("Clicking element: {}",locator);
 }
+
+    public static void clickElementUsingJavaScript(WebDriver driver, By locator){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",driver.findElement(locator));
+        CustomLogger.logger.info("Clicking using java script element: {}",locator);
+    }
 
     public static void doubleClickElement(WebDriver driver, By locator){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
