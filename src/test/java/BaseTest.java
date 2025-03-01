@@ -12,20 +12,20 @@ public class BaseTest {
 
     @BeforeClass
     public void startDriver(ITestContext context){
-        this.driver=new SetupDriver().initDriver("chrome");
-    context.setAttribute("driver",this.driver);
+        driver=new SetupDriver().initDriver("chrome");
+    context.setAttribute("driver",driver);
     }
 
     @AfterMethod
     public void refreshDriverAndDeleteCookies(){
-        this.driver.navigate().refresh();
-        this.driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
+        driver.manage().deleteAllCookies();
         CustomLogger.logger.info("delete all cookies and refresh page");
     }
 
     @AfterClass
     public void tearDriver(){
-        this.driver.quit();
+        driver.quit();
         CustomLogger.logger.info("Close driver");
     }
 

@@ -2,6 +2,7 @@ package engine.actions;
 
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
@@ -29,6 +30,7 @@ public class BrowserActions {
         driver.switchTo().alert().accept();
         CustomLogger.logger.info("Accept url");
     }
+
 
     public static void navigateWindowByNum(WebDriver driver, int windowNum){
         List<String> window= new ArrayList<>();

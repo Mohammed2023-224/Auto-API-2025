@@ -41,4 +41,13 @@ public static void clickElement(WebDriver driver, By locator){
         return text;
     }
 
+    public static void switchToFrameByLocator(WebDriver driver, By locator){
+        driver.switchTo().frame(driver.findElement(locator));
+        CustomLogger.logger.info("switch to frame by locator: {}",locator);
+    }
+
+    public static void switchToParentFrame(WebDriver driver){
+        driver.switchTo().parentFrame();
+        CustomLogger.logger.info("switch to parent frame");
+    }
 }
