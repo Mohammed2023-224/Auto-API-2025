@@ -25,7 +25,7 @@ public class BaseTest {
 
     @AfterClass
     public void tearDriver(){
-        this.driver.close();
+        this.driver.quit();
         CustomLogger.logger.info("Close driver");
     }
 
