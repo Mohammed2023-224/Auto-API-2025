@@ -1,44 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration status="warn">
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration status="info">
     <properties>
-        <property name="Console pattern">%highlight{%d{HH:mm:ss} [%t] [%-5level]: %msg %throwable{short.fileName}
-            %throwable{short.methodName}}</property>
-        <property name="File pattern">%d{HH:mm:ss} [%t] [%-5level]: %msg %throwable{short.fileName}
+        <property name="consolePattern">%highlight{%d{HH:mm:ss} [%t] [%-5level]: %msg %throwable{short.fileName}
+            %throwable{short.methodName}}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green}
+        </property>
+        <property name="filePattern">%d{HH:mm:ss} [%t] [%-5level]: %msg %throwable{short.fileName}
             %throwable{short.methodName}
         </property>
-        <property name ="file path">test_output/output/logs/ </property>
-        <Property name="file name pattern">%d{dd MMM yyyy HH:mm:ss}</Property>
+        <property name="filePath">test_output/output/logs/</property>
+        <property name="filePathPattern">%d{dd MMM yyyy HH:mm:ss}</property>
     </properties>
 
     <Appenders>
-        <console name="Console"  target="SYSTEM_OUT">
-            <PatternLayout pattern="${Console Pattern}"/>
+        <console name="consoleLog" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consolePattern}"></PatternLayout>
         </console>
 
-        <RollingFile name="All tests" fileName="${file path}${file name pattern} full logs.log">
-            <PatternLayout pattern="${File Pattern}"/>
+        <RollingFile name="allTests" fileName="${filePath}MainLog.log" filePattern="${filePath}${filePathPattern}.log">
+            <PatternLayout pattern="${filePattern}"></PatternLayout>
+            <SizeBasedTriggeringPolicy size="10MB"></SizeBasedTriggeringPolicy>
             <DefaultRolloverStrategy max="3">
-                <Delete basePath="${file Path}" maxDepth="3">
+                <Delete basePath="${filePath}" maxDepth="3">
                     <!-- Delete all files older than 30 days -->
                     <IfLastModified age="30d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
 
-        <RollingFile name="single test"  fileName="${file path}test logs.log">
-            <PatternLayout pattern="${File Pattern}"/></RollingFile>
+        <RollingFile name="singleTest" fileName="${filePath}tests/currentTest.log"
+                     filePattern="${filePath}/tests/${filePathPattern}.log">
+            <PatternLayout pattern="${filePattern}"></PatternLayout>
+            <SizeBasedTriggeringPolicy size="10MB"></SizeBasedTriggeringPolicy>
+            <DefaultRolloverStrategy max="3">
+                <Delete basePath="${filePath}" maxDepth="3">
+                    <!-- Delete all files older than 30 days -->
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
-<Loggers>
-    <Logger name="logger" level="info" additivity="false">
-        <AppenderRef ref="All tests"/>
-        <AppenderRef ref="console"/>
-        <AppenderRef ref="single test"/>
-    </Logger>
+    <Loggers>
+        <!--        <Logger name="mainLogger" level="info" additivity="false">-->
+        <!--            <AppenderRef ref="consoleLog"/>-->
+        <!--        </Logger>-->
+        <Root level="info" additivity="false">
+            <AppenderRef ref="consoleLog"/>
+            <AppenderRef ref="allTests"/>
+            <AppenderRef ref="singleTest"/>
+        </Root>
+    </Loggers>
 
-    <Root level="info" additivity="false">
-        <AppenderRef ref="All tests"/>
-        <AppenderRef ref="console"/>
-    </Root>
-</Loggers>
 
 </configuration>
