@@ -13,12 +13,12 @@
 
 ### First project (https://play1.automationcamp.ir/)
 
-Automated all functions on the site focusing most on selenium commands not the design
+Automated all functions on the site, focusing most on selenium commands, not the design
 
 #### What can be improved:
 
 - Design: Used a lot of static parameters and spaghetti code
 
-#### knowlege gained 
+#### Knowledge gained 
 
-- How to interact with native browser text, with java script executor and pseudo elements
+- How to interact with native browser text, java script executor and pseudo elements
