@@ -103,4 +103,11 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info("Get the property {} value : {}", property,value);
         return value;
     }
+    public static String getPseudoElementContent(WebDriver driver, By locator ){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String value= (String) js.executeScript("return window.getComputedStyle(arguments[0], '::after').getPropertyValue('content');"
+                , driver.findElement(locator));
+        CustomLogger.logger.info("Get the pseudo element content : {}", value);
+        return value.replace("\"","");
+    }
 }

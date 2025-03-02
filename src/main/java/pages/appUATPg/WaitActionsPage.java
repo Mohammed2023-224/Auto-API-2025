@@ -58,8 +58,9 @@ private final By minWaitTime= By.id("min_wait");
         By visibleTrigger=By.id("visibility_trigger");
         By visibilitTarget =By.id("visibility_target");
         ElementActions.clickElement(driver,visibleTrigger);
-        WaitActions.explicitWaitByCondition(driver, visibilitTarget,"clickable",maxTime);
+        WaitActions.explicitWaitByCondition(driver, visibilitTarget,"clickable",maxTime+1);
         ElementActions.clickElement(driver, visibilitTarget);
+        WaitActions.explicitWaitByCondition(driver, By.xpath("//h3[@class='popover-header']"),"visible",maxTime+1);
         Assert.assertTrue(ElementActions.getText(driver,By.xpath("//h3[@class='popover-header']"))
                 .contains("Can you see me?"));
     }

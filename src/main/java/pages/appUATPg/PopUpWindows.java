@@ -27,6 +27,7 @@ public class PopUpWindows {
         BrowserActions.navigateWindowByNum(driver,1);
         ElementActions.clickElement(driver,secondWindowAssertionButton);
         Assert.assertTrue(ElementActions.getText(driver,secondWindowAssertionButton).contains("Clicked"));
+        driver.close();
         BrowserActions.navigateWindowByNum(driver,0);
     }
 }
