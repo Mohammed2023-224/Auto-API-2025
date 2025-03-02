@@ -13,7 +13,7 @@
 
 ### First project (https://play1.automationcamp.ir/)
 
-Automated all functions on the site, focusing most on selenium commands, not the design
+Automated all functions on the site, focusing mostly on selenium commands, not the design
 
 #### What can be improved:
 
@@ -22,3 +22,7 @@ Automated all functions on the site, focusing most on selenium commands, not the
 #### Knowledge gained 
 
 - How to interact with native browser text, java script executor and pseudo elements
+
+- Different wait strategy, Mouse and keyboard actions
+
+- How to deal with uploading and downloading files
