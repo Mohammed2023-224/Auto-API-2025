@@ -97,4 +97,10 @@ public static void clickElement(WebDriver driver, By locator){
         driver.switchTo().parentFrame();
         CustomLogger.logger.info("switch to parent frame");
     }
+    public static String getElementProperty(WebDriver driver, By locator,String property){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String value= (String) js.executeScript("return arguments[0][arguments[1]];", driver.findElement(locator), property);
+        CustomLogger.logger.info("Get the property {} value : {}", property,value);
+        return value;
+    }
 }
