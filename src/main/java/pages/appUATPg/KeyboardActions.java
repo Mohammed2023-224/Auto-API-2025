@@ -8,14 +8,15 @@ import org.testng.Assert;
 
 public class KeyboardActions {
 private final WebDriver driver;
-public KeyboardActions(WebDriver driver){
-    this.driver=driver;
-}
-public void handleKeyboard(){
     By typingArea= By.id("area");
     By currentKey= By.id("key");
     By keyCode= By.id("code");
     By shiftModifier= By.id("shift");
+public KeyboardActions(WebDriver driver){
+    this.driver=driver;
+}
+public void handleKeyboard(){
+
     ElementActions.typeInElement(driver,typingArea,"t");
     Assert.assertTrue(ElementActions.getText(driver,currentKey).contains("t"));
     Assert.assertTrue(ElementActions.getText(driver,keyCode).contains("KeyT"));

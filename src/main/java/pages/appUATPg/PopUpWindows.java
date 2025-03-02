@@ -11,12 +11,12 @@ public class PopUpWindows {
     public PopUpWindows(WebDriver driver){
         this.driver=driver;
     }
+    By firstWindow= By.id("window1");
+    By secondWindow= By.id("window2");
+    By firstWindowAssertionButton= By.id("click_me_2");
+    By secondWindowAssertionButton= By.id("click_me_4");
 
     public void handlePopups(){
-        By firstWindow= By.id("window1");
-        By secondWindow= By.id("window2");
-        By firstWindowAssertionButton= By.id("click_me_2");
-        By secondWindowAssertionButton= By.id("click_me_4");
         ElementActions.clickElement(driver,firstWindow);
         BrowserActions.navigateWindowByNum(driver,1);
         ElementActions.clickElement(driver,firstWindowAssertionButton);

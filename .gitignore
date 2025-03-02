@@ -1,7 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/test/**/target/
+!**/src/AutomationPlaygroundTests/**/target/
 /src/main/resources/archetype-resources/
 /src/main/resources/META-INF/
 /.idea/
@@ -32,7 +32,7 @@ target/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
-!**/src/test/**/build/
+!**/src/AutomationPlaygroundTests/**/build/
 
 ### VS Code ###
 .vscode/

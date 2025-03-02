@@ -14,11 +14,10 @@ private final WebDriver driver;
 public FormPage(WebDriver driver){
     this.driver=driver;
 }
-private By options(String option){
-    return By.xpath("//input[@value='"+option+"']");
-}
-
-public void handleForm(){
+String path="C:\\Users\\USER\\Downloads\\";
+String firstFile="Nada_Ali_Resume_updated-4.pdf";
+String secondFile="pom.txt";
+String thirdFile="sample_text.txt";
     By expField= By.id("exp");
     By expFieldAssertion= By.id("exp_help");
     By checkCheckBoxes= By.id("check_validate");
@@ -50,6 +49,12 @@ public void handleForm(){
     By nonEnglishTextValidate= By.id("नाव_तपासा");
     By nonEnglishSelectionValidate= By.id("check_validate_non_english");
     By submitButton= By.tagName("button");
+
+private By options(String option){
+    return By.xpath("//input[@value='"+option+"']");
+}
+
+public void handleForm(){
     ElementActions.typeInElement(driver,expField,"6");
     Assert.assertTrue(ElementActions.getText(driver,expFieldAssertion).contains("6"));
     ElementActions.clickElement(driver,options("PYTHON"));
@@ -79,17 +84,16 @@ public void handleForm(){
     Assert.assertTrue(ElementActions.getText(driver,readGermanValidate).contains("false"));
     ElementActions.dragAndDropByLocation(driver,fluency,-100,0);
     Assert.assertTrue(ElementActions.getText(driver,fluencyValidate).contains("1"));
-    ElementActions.typeInElement(driver,uploadCV,"C:\\Users\\USER\\Downloads\\Nada_Ali_Resume_updated-4.pdf");
-    Assert.assertTrue(ElementActions.getText(driver,uploadCVValidate).contains("Nada_Ali_Resume_updated-4.pdf"));
-    ElementActions.typeInElement(driver,uploadFiles,"C:\\Users\\USER\\Downloads\\pom.txt \n C:\\Users\\USER\\Downloads\\Nada_Ali_Resume_updated-4.pdf");
+    ElementActions.typeInElement(driver,uploadCV,path+firstFile);
+    Assert.assertTrue(ElementActions.getText(driver,uploadCVValidate).contains(firstFile));
+    ElementActions.typeInElement(driver,uploadFiles,path+secondFile+" \n "+path+firstFile);
     Assert.assertTrue(ElementActions.getText(driver,uploadFilesValidate).contains
-            ("pom.txt Nada_Ali_Resume_updated-4.pdf"));
+            (secondFile+" "+firstFile));
     Assert.assertTrue(driver.findElement(salary).getDomProperty("placeholder").contains("You should not provide this"));
     ElementActions.clickElement(driver,downloadFile);
-WaitActions.waitForFileToBeDownloaded(driver,"C:\\Users\\USER\\Downloads\\sample_text.txt");
-
-    Assert.assertTrue(SystemMethods.checkExistenceOfFile("C:\\Users\\USER\\Downloads\\sample_text.txt"));
-    Assert.assertTrue(SystemMethods.readFileContent("C:\\Users\\USER\\Downloads\\sample_text.txt").contains("File downloaded by AutomationCamp"));
+WaitActions.waitForFileToBeDownloaded(driver,path+thirdFile);
+    Assert.assertTrue(SystemMethods.checkExistenceOfFile(path+thirdFile));
+    Assert.assertTrue(SystemMethods.readFileContent(path+thirdFile).contains("File downloaded by AutomationCamp"));
     ElementActions.typeInElement(driver,city,"test");
     ElementActions.typeInElement(driver,state,"test");
     ElementActions.clickElement(driver,submitButton);
