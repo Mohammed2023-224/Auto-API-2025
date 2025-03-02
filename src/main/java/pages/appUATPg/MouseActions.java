@@ -36,7 +36,7 @@ public class MouseActions {
         By dragSource=By.id("drag_source");
         By dropSource=By.id("drop_target");
         By assertion=new ByChained(dropSource,By.tagName("h3"));
-        ElementActions.dragAndDrop(driver,dragSource,dropSource);
+        ElementActions.dragAndDropByElement(driver,dragSource,dropSource);
         Assert.assertTrue(ElementActions.getText(driver,assertion).contains("Drop is suc"));
     }
 }

@@ -42,11 +42,17 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info(" hover over element: {}",locator);
     }
 
-    public static void dragAndDrop(WebDriver driver, By locatorSource,By locatorTarget){
+    public static void dragAndDropByElement(WebDriver driver, By locatorSource, By locatorTarget){
         WaitActions.explicitWaitByCondition(driver,locatorSource,"visible",5);
         WaitActions.explicitWaitByCondition(driver,locatorTarget,"visible",5);
         new Actions(driver).dragAndDrop(driver.findElement(locatorSource),driver.findElement(locatorTarget)).perform();
         CustomLogger.logger.info(" drag element from {} to {}",locatorSource,locatorTarget);
+    }
+
+    public static void dragAndDropByLocation(WebDriver driver, By locatorSource ,int horizontal, int vertical){
+        WaitActions.explicitWaitByCondition(driver,locatorSource,"visible",5);
+        new Actions(driver).dragAndDropBy(driver.findElement(locatorSource),horizontal,vertical).perform();
+        CustomLogger.logger.info(" drag element from {}",locatorSource);
     }
 
     public static void typeInElement(WebDriver driver, By locator,String text){

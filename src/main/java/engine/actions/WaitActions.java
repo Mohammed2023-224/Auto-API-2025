@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.Optional;
 
+import java.io.File;
 import java.time.Duration;
 
 public class WaitActions {
@@ -58,5 +59,10 @@ public class WaitActions {
                 }
                     break;
         }
+    }
+    public static boolean waitForFileToBeDownloaded(WebDriver driver,String path){
+        File file = new File(path);
+        explicitWait(driver,5).until(x ->file.exists() && file.canRead());
+        return file.exists();
     }
 }

@@ -1,9 +1,12 @@
 package pages.appUATPg;
 
 import engine.actions.ElementActions;
+import engine.actions.SystemMethods;
+import engine.actions.WaitActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class FormPage {
@@ -40,7 +43,9 @@ public void handleForm(){
     By city= By.id("validationCustom03");
     By state= By.id("validationCustom04");
     By zip= By.id("validationCustom05");
+    By invalidZip= By.id("invalid_zip");
     By agree= By.id("invalidCheck");
+    By invalidTerms= By.id("invalid_terms");
     By nonEnglishText= By.id("नाव");
     By nonEnglishTextValidate= By.id("नाव_तपासा");
     By nonEnglishSelectionValidate= By.id("check_validate_non_english");
@@ -72,11 +77,36 @@ public void handleForm(){
     Assert.assertTrue(ElementActions.getText(driver,readGermanValidate).contains("true"));
     ElementActions.clickElementUsingJavaScript(driver,readGerman);
     Assert.assertTrue(ElementActions.getText(driver,readGermanValidate).contains("false"));
+    ElementActions.dragAndDropByLocation(driver,fluency,-100,0);
+    Assert.assertTrue(ElementActions.getText(driver,fluencyValidate).contains("1"));
     ElementActions.typeInElement(driver,uploadCV,"C:\\Users\\USER\\Downloads\\Nada_Ali_Resume_updated-4.pdf");
     Assert.assertTrue(ElementActions.getText(driver,uploadCVValidate).contains("Nada_Ali_Resume_updated-4.pdf"));
-    ElementActions.typeInElement(driver,uploadFiles,"C:\\Users\\USER\\Downloads\\Nada_Ali_Resume_updated-4.pdf");
-    ElementActions.typeInElement(driver,uploadFiles,"C:\\Users\\USER\\Downloads\\sample_text.txt");
-    Assert.assertTrue(ElementActions.getText(driver,uploadFilesValidate).contains("Nada_Ali_Resume_updated-4.pdf sample_text.txt"));
+    ElementActions.typeInElement(driver,uploadFiles,"C:\\Users\\USER\\Downloads\\pom.txt \n C:\\Users\\USER\\Downloads\\Nada_Ali_Resume_updated-4.pdf");
+    Assert.assertTrue(ElementActions.getText(driver,uploadFilesValidate).contains
+            ("pom.txt Nada_Ali_Resume_updated-4.pdf"));
     Assert.assertTrue(driver.findElement(salary).getDomProperty("placeholder").contains("You should not provide this"));
+    ElementActions.clickElement(driver,downloadFile);
+WaitActions.waitForFileToBeDownloaded(driver,"C:\\Users\\USER\\Downloads\\sample_text.txt");
+
+    Assert.assertTrue(SystemMethods.checkExistenceOfFile("C:\\Users\\USER\\Downloads\\sample_text.txt"));
+    Assert.assertTrue(SystemMethods.readFileContent("C:\\Users\\USER\\Downloads\\sample_text.txt").contains("File downloaded by AutomationCamp"));
+    ElementActions.typeInElement(driver,city,"test");
+    ElementActions.typeInElement(driver,state,"test");
+    ElementActions.clickElement(driver,submitButton);
+    Assert.assertTrue(ElementActions.getText(driver,invalidZip).contains("Please provide a valid zip."));
+    Assert.assertTrue(ElementActions.getText(driver,invalidTerms).contains("You must agree before submitting."));
+    ElementActions.typeInElement(driver,zip,"test");
+    ElementActions.clickElement(driver,agree);
+    ElementActions.clickElement(driver,submitButton);
+    Assert.assertTrue(ElementActions.getText(driver,city).contains(""));
+    ElementActions.typeInElement(driver,nonEnglishText,"test");
+    Assert.assertTrue(ElementActions.getText(driver,nonEnglishTextValidate).contains("test"));
+    ElementActions.clickElement(driver,options("मराठी"));
+    Assert.assertTrue(ElementActions.getText(driver,nonEnglishSelectionValidate).contains("मराठी"));
+    ElementActions.clickElement(driver,options("ગુજરાતી"));
+    Assert.assertTrue(ElementActions.getText(driver,nonEnglishSelectionValidate).contains("मराठी ગુજરાતી"));
+
+
+
 }
 }

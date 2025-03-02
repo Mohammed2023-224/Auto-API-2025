@@ -8,6 +8,11 @@ import org.apache.logging.log4j.core.LoggerContext;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SystemMethods {
 
@@ -58,4 +63,24 @@ public class SystemMethods {
             CustomLogger.logger.info("file {} isn't executable type",path);
         }
     }
+
+    public static boolean checkExistenceOfFile(String path){
+        File file = new File(path);
+        CustomLogger.logger.info("Check if file exists {}", file.exists());
+        return file.exists();
+    }
+
+
+    public static String readFileContent(String path){
+                Path pth = Paths.get(path);
+        String lines ="";
+                try {
+                     lines = String.valueOf(Files.readAllLines(pth));
+                } catch (IOException ex) {
+                    // handle exception...
+                }
+        CustomLogger.logger.info("get file contents", lines);
+                return lines;
+        }
+
 }
