@@ -39,22 +39,22 @@ public class WaitActions {
         time = String.valueOf(time).isEmpty() || time==0? 10 : time;
         switch (condition.toLowerCase()){
             case "visible":
-                if(!driver.findElement(locator).isDisplayed()){
+                if(!isElementVisible(driver, locator)){
                 explicitWait(driver,time).until(ExpectedConditions.visibilityOfElementLocated(locator));
                 }
                 break;
             case "invisible":
-                if(driver.findElement(locator).isDisplayed()){
+                if(!isElementVisible(driver, locator)){
                     explicitWait(driver,time).until(ExpectedConditions.invisibilityOfElementLocated(locator));
                 }
                 break;
             case "enabled":
-                if(!driver.findElement(locator).isEnabled()){
+                if(!isElementEnabled(driver,locator)){
                     explicitWait(driver,time).until(ExpectedConditions.elementToBeClickable(locator));
                 }
                 break;
             case "clickable":
-                    if(!driver.findElement(locator).isDisplayed()){
+                    if(!isElementClickable(driver, locator)){
                 explicitWait(driver,time).until(ExpectedConditions.elementToBeClickable(locator));
                 }
                     break;
@@ -64,5 +64,28 @@ public class WaitActions {
         File file = new File(path);
         explicitWait(driver,5).until(x ->file.exists() && file.canRead());
         return file.exists();
+    }
+
+    private static boolean isElementVisible(WebDriver driver, By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            return false; // Element is not visible or not found
+        }
+    }
+
+    private static boolean isElementClickable(WebDriver driver, By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
+        } catch (Exception e) {
+            return false; // Element is not clickable or not found
+        }
+    }
+    private static boolean isElementEnabled(WebDriver driver, By locator) {
+        try {
+            return  driver.findElement(locator).isEnabled();
+        } catch (Exception e) {
+            return false; // Element is not clickable or not found
+        }
     }
 }

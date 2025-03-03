@@ -109,8 +109,5 @@ WaitActions.waitForFileToBeDownloaded(driver,path+thirdFile);
     Assert.assertTrue(ElementActions.getText(driver,nonEnglishSelectionValidate).contains("मराठी"));
     ElementActions.clickElement(driver,options("ગુજરાતી"));
     Assert.assertTrue(ElementActions.getText(driver,nonEnglishSelectionValidate).contains("मराठी ગુજરાતી"));
-
-
-
 }
 }
