@@ -48,12 +48,8 @@ public class WaitActions {
                     explicitWait(driver,time).until(ExpectedConditions.invisibilityOfElementLocated(locator));
                 }
                 break;
-            case "enabled":
-                if(!isElementEnabled(driver,locator)){
-                    explicitWait(driver,time).until(ExpectedConditions.elementToBeClickable(locator));
-                }
-                break;
             case "clickable":
+            case "enabled":
                     if(!isElementClickable(driver, locator)){
                 explicitWait(driver,time).until(ExpectedConditions.elementToBeClickable(locator));
                 }
@@ -77,13 +73,6 @@ public class WaitActions {
     private static boolean isElementClickable(WebDriver driver, By locator) {
         try {
             return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
-        } catch (Exception e) {
-            return false; // Element is not clickable or not found
-        }
-    }
-    private static boolean isElementEnabled(WebDriver driver, By locator) {
-        try {
-            return  driver.findElement(locator).isEnabled();
         } catch (Exception e) {
             return false; // Element is not clickable or not found
         }

@@ -26,7 +26,7 @@ public class DynamicTableTab {
     }
 
     public void handleDynamicTable(){
-WaitActions.explicitWaitByCondition(driver,superHeroTitle(1),"visible",5);
+    WaitActions.explicitWaitByCondition(driver,superHeroTitle(1),"visible",5);
         int size=driver.findElements(superHero).size();
         String name= "";
         int elementNo=0;

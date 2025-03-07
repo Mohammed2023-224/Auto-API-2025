@@ -16,17 +16,17 @@ public class BaseTest {
     context.setAttribute("driver",driver);
     }
 
-    @AfterMethod
-    public void refreshDriverAndDeleteCookies(){
-        driver.navigate().refresh();
-        driver.manage().deleteAllCookies();
-        CustomLogger.logger.info("delete all cookies and refresh page");
-    }
-
-    @AfterClass
-    public void tearDriver(){
-        driver.quit();
-        CustomLogger.logger.info("Close driver");
-    }
+//    @AfterMethod
+//    public void refreshDriverAndDeleteCookies(){
+//        driver.navigate().refresh();
+//        driver.manage().deleteAllCookies();
+//        CustomLogger.logger.info("delete all cookies and refresh page");
+//    }
+//
+//    @AfterClass
+//    public void tearDriver(){
+//        driver.quit();
+//        CustomLogger.logger.info("Close driver");
+//    }
 
 }
