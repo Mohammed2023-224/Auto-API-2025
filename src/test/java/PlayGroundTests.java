@@ -1,10 +1,7 @@
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.automationPlayGround.DynamicTableTab;
-import pages.automationPlayGround.HomePage;
-import pages.automationPlayGround.TagsInputBox;
-import pages.automationPlayGround.VerifyAccount;
+import pages.automationPlayGround.*;
 
 import java.time.Duration;
 
@@ -13,6 +10,7 @@ HomePage homePage;
 DynamicTableTab dynamicTableTab;
 VerifyAccount verifyAccount;
 TagsInputBox tagsInputBox;
+MultiLevelDD multiLevelDD;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -36,6 +34,12 @@ public void dynamicTableTest(){
         tagsInputBox.handleTags();
     }
 
+    @Test
+    public void multiLevelDD(){
+        homePage.clickPage("Multi Level Dropdown");
+        multiLevelDD.handleMultiLevelDropDown();
+    }
+
 
 @BeforeMethod()
 public void navigateToHomePage(){
@@ -48,6 +52,7 @@ private void initClasses(){
     dynamicTableTab=new DynamicTableTab(driver);
     verifyAccount=new VerifyAccount(driver);
     tagsInputBox=new TagsInputBox(driver);
+    multiLevelDD=new MultiLevelDD(driver);
 }
 
 }
