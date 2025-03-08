@@ -16,7 +16,6 @@ public void handleCoveredElement(){
     ElementActions.scrollToElement(driver,btn);
     ElementActions.clickElement(driver,btn);
     ElementActions.scrollToElement(driver,assertion);
-    Assert.assertTrue(ElementActions.getText(driver,assertion).contains("Mission"));
+    ElementActions.assertTextContainsText(driver,assertion,"Mission");
 }
-
 }
