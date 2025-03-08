@@ -76,6 +76,12 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info("pressing the {} key",key);
     }
 
+    public static void scrollToElement(WebDriver driver, By locator){
+        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        new Actions(driver).scrollToElement(driver.findElement(locator)).perform();
+        CustomLogger.logger.info("Scrolling to element {}",locator);
+    }
+
     /* -------------------- Lists actions ------------------------------*/
     public static void selectDDLOption(WebDriver driver, By locator,String option){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);

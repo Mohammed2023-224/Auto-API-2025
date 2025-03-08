@@ -14,6 +14,7 @@ MultiLevelDD multiLevelDD;
 SortableList sortableList;
     ShadowDomTest shadowDomTest;
     StarsRatingWidget starsRatingWidget;
+    CoveredElement coveredElement;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -60,7 +61,11 @@ public void dynamicTableTest(){
         homePage.clickPage("Stars Rating Widget");
         starsRatingWidget.handleRating();
     }
-
+    @Test
+    public void coveredElementTest(){
+        homePage.clickPage("Covered Elements");
+        coveredElement.handleCoveredElement();
+    }
 
 @BeforeMethod()
 public void navigateToHomePage(){
@@ -77,6 +82,7 @@ private void initClasses(){
     sortableList=new SortableList(driver);
     shadowDomTest=new ShadowDomTest(driver);
     starsRatingWidget=new StarsRatingWidget(driver);
+    coveredElement=new CoveredElement(driver);
 }
 
 }
