@@ -4,7 +4,6 @@ import engine.actions.ElementActions;
 import engine.actions.WaitActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 
 public class SamplePage {
@@ -38,7 +37,7 @@ private By options(String option){
 public void loginForm(){
     ElementActions.typeInElement(driver,userName,"admin");
     ElementActions.clickElement(driver,login);
-    Assert.assertTrue(ElementActions.getElementProperty(driver,pass,"validationMessage").contains("Please fill out this field."));
+    Assert.assertTrue(ElementActions.getElementPropertyJSExecutor(driver,pass,"validationMessage").contains("Please fill out this field."));
     ElementActions.typeInElement(driver,pass,"admin");
         ElementActions.clickElement(driver,rememberMe);
         ElementActions.clickElement(driver,login);

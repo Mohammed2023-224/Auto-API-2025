@@ -12,6 +12,7 @@ VerifyAccount verifyAccount;
 TagsInputBox tagsInputBox;
 MultiLevelDD multiLevelDD;
 SortableList sortableList;
+    ShadowDomTest shadowDomTest;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -47,6 +48,12 @@ public void dynamicTableTest(){
         sortableList.handleSorting();
     }
 
+    @Test
+    public void shadowDomTest(){
+        homePage.clickPage("Shadow DOM");
+        shadowDomTest.handleShadow();
+    }
+
 
 @BeforeMethod()
 public void navigateToHomePage(){
@@ -61,6 +68,7 @@ private void initClasses(){
     tagsInputBox=new TagsInputBox(driver);
     multiLevelDD=new MultiLevelDD(driver);
     sortableList=new SortableList(driver);
+    shadowDomTest=new ShadowDomTest(driver);
 }
 
 }

@@ -1,10 +1,7 @@
 package engine.actions;
 
 import engine.reporter.CustomLogger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -99,11 +96,22 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info("get text from locator {} : {}",locator, text);
         return text;
     }
-    public static String getElementProperty(WebDriver driver, By locator,String property){
+    public static String getElementPropertyJSExecutor(WebDriver driver, By locator, String property){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String value= (String) js.executeScript("return arguments[0][arguments[1]];", driver.findElement(locator), property);
         CustomLogger.logger.info("Get the property {} value : {}", property,value);
         return value;
+    }
+
+    public static String getElementAttribute(WebDriver driver, By locator, String property){
+        String attributeValue=driver.findElement(locator).getDomAttribute(property);
+        CustomLogger.logger.info("Get the attribute of {} value : {}", property,attributeValue);
+        return attributeValue;
+    }
+    public static String getElementAttribute( WebElement locator, String property){
+        String attributeValue=locator.getDomAttribute(property);
+        CustomLogger.logger.info("Get the attribute of web element {} value : {}", property,attributeValue);
+        return attributeValue;
     }
 
     public static String getCssValue(WebDriver driver, By locator,String property){
@@ -131,6 +139,12 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info("switch to parent frame");
     }
 
+/* --------------------------- Shadow dom actions ---------------*/
+    public static WebElement getShadowElement(WebDriver driver,By head, By element){
+        SearchContext shadowHost=  driver.findElement(head).getShadowRoot();
+        CustomLogger.logger.info("return shadow element located by {}",element);
+        return shadowHost.findElement(element);
+    }
 
 /* --------------------- Element assertion actions ---------------------------*/
     public static boolean isElementVisible(WebDriver driver, By locator) {
