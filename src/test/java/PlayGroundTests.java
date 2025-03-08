@@ -13,6 +13,7 @@ TagsInputBox tagsInputBox;
 MultiLevelDD multiLevelDD;
 SortableList sortableList;
     ShadowDomTest shadowDomTest;
+    StarsRatingWidget starsRatingWidget;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -54,6 +55,12 @@ public void dynamicTableTest(){
         shadowDomTest.handleShadow();
     }
 
+    @Test
+    public void startRatingTest(){
+        homePage.clickPage("Stars Rating Widget");
+        starsRatingWidget.handleRating();
+    }
+
 
 @BeforeMethod()
 public void navigateToHomePage(){
@@ -69,6 +76,7 @@ private void initClasses(){
     multiLevelDD=new MultiLevelDD(driver);
     sortableList=new SortableList(driver);
     shadowDomTest=new ShadowDomTest(driver);
+    starsRatingWidget=new StarsRatingWidget(driver);
 }
 
 }
