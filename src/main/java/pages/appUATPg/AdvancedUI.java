@@ -17,7 +17,7 @@ public AdvancedUI(WebDriver driver){
 
 }
 public void handleTab(){
-    String text=ElementActions.getPseudoElementContent(driver,starRating);
+    String text=ElementActions.getPseudoElementContent(driver,starRating,"::after");
     ElementActions.typeInElement(driver,textRating,text);
     ElementActions.clickElement(driver,checkRating);
     Assert.assertTrue(ElementActions.getText(driver,validateRating).contains("Well done!"));

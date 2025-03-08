@@ -11,6 +11,7 @@ DynamicTableTab dynamicTableTab;
 VerifyAccount verifyAccount;
 TagsInputBox tagsInputBox;
 MultiLevelDD multiLevelDD;
+SortableList sortableList;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -40,6 +41,12 @@ public void dynamicTableTest(){
         multiLevelDD.handleMultiLevelDropDown();
     }
 
+    @Test
+    public void SortableList(){
+        homePage.clickPage("Sortable List");
+        sortableList.handleSorting();
+    }
+
 
 @BeforeMethod()
 public void navigateToHomePage(){
@@ -53,6 +60,7 @@ private void initClasses(){
     verifyAccount=new VerifyAccount(driver);
     tagsInputBox=new TagsInputBox(driver);
     multiLevelDD=new MultiLevelDD(driver);
+    sortableList=new SortableList(driver);
 }
 
 }

@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class ElementActions {
-
+/* ----------------------- mouse Actions ----------------------------------------*/
 public static void clickElement(WebDriver driver, By locator){
     WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
     WaitActions.explicitWaitByCondition(driver,locator,"clickable",5);
@@ -48,6 +48,16 @@ public static void clickElement(WebDriver driver, By locator){
         new Actions(driver).dragAndDrop(driver.findElement(locatorSource),driver.findElement(locatorTarget)).perform();
         CustomLogger.logger.info(" drag element from {} to {}",locatorSource,locatorTarget);
     }
+    public static void dragAndDropByMouse(WebDriver driver, By locatorSource, By locatorTarget){
+        WaitActions.explicitWaitByCondition(driver,locatorSource,"clickable",5);
+        WaitActions.explicitWaitByCondition(driver,locatorTarget,"clickable",5);
+        new Actions(driver).scrollToElement(driver.findElement(locatorSource))
+                .clickAndHold(driver.findElement(locatorSource))
+                .scrollToElement(driver.findElement(locatorTarget))
+                .moveToElement(driver.findElement(locatorTarget))
+                .release(driver.findElement(locatorTarget)).build().perform();
+        CustomLogger.logger.info(" drag element from {} to {} by mouse",locatorSource,locatorTarget);
+    }
 
     public static void dragAndDropByLocation(WebDriver driver, By locatorSource ,int horizontal, int vertical){
         WaitActions.explicitWaitByCondition(driver,locatorSource,"visible",5);
@@ -55,6 +65,7 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info(" drag element from {}",locatorSource);
     }
 
+    /* --------------------------- Keyboard actions ------------------------------*/
     public static void typeInElement(WebDriver driver, By locator,String text){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
     driver.findElement(locator).clear();
@@ -68,6 +79,7 @@ public static void clickElement(WebDriver driver, By locator){
         CustomLogger.logger.info("pressing the {} key",key);
     }
 
+    /* -------------------- Lists actions ------------------------------*/
     public static void selectDDLOption(WebDriver driver, By locator,String option){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
     Select select=new Select(driver.findElement(locator));
@@ -81,13 +93,34 @@ public static void clickElement(WebDriver driver, By locator){
         select.getFirstSelectedOption();
         CustomLogger.logger.info("Select first option from locator {}",locator);
     }
-
+/* ---------------------------- getting info actions-------------------*/
     public static  String getText(WebDriver driver, By locator){
         String text=driver.findElement(locator).getText();
         CustomLogger.logger.info("get text from locator {} : {}",locator, text);
         return text;
     }
+    public static String getElementProperty(WebDriver driver, By locator,String property){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String value= (String) js.executeScript("return arguments[0][arguments[1]];", driver.findElement(locator), property);
+        CustomLogger.logger.info("Get the property {} value : {}", property,value);
+        return value;
+    }
 
+    public static String getCssValue(WebDriver driver, By locator,String property){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String value= (String) js.executeScript("return window.getComputedStyle(arguments[0]).getPropertyValue(arguments[1]);", driver.findElement(locator), property);
+        CustomLogger.logger.info("Get the css value {} value : {}", property,value);
+        return value;
+    }
+    public static String getPseudoElementContent(WebDriver driver, By locator,String pseudoElement ){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String value= (String) js.executeScript("return window.getComputedStyle(arguments[0], arguments[1]).getPropertyValue('content');"
+                , driver.findElement(locator),pseudoElement);
+        CustomLogger.logger.info("Get the pseudo element content : {} from element{} ", value,locator);
+        return value.replace("\"","");
+    }
+
+    /* ------------------Frame, window and tabs actions ------------------*/
     public static void switchToFrameByLocator(WebDriver driver, By locator){
         driver.switchTo().frame(driver.findElement(locator));
         CustomLogger.logger.info("switch to frame by locator: {}",locator);
@@ -97,17 +130,22 @@ public static void clickElement(WebDriver driver, By locator){
         driver.switchTo().parentFrame();
         CustomLogger.logger.info("switch to parent frame");
     }
-    public static String getElementProperty(WebDriver driver, By locator,String property){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String value= (String) js.executeScript("return arguments[0][arguments[1]];", driver.findElement(locator), property);
-        CustomLogger.logger.info("Get the property {} value : {}", property,value);
-        return value;
+
+
+/* --------------------- Element assertion actions ---------------------------*/
+    public static boolean isElementVisible(WebDriver driver, By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            return false; // Element is not visible or not found
+        }
     }
-    public static String getPseudoElementContent(WebDriver driver, By locator ){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String value= (String) js.executeScript("return window.getComputedStyle(arguments[0], '::after').getPropertyValue('content');"
-                , driver.findElement(locator));
-        CustomLogger.logger.info("Get the pseudo element content : {}", value);
-        return value.replace("\"","");
+
+    public static boolean isElementClickable(WebDriver driver, By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
+        } catch (Exception e) {
+            return false; // Element is not clickable or not found
+        }
     }
 }
