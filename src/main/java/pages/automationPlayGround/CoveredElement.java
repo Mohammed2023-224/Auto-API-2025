@@ -3,7 +3,6 @@ package pages.automationPlayGround;
 import engine.actions.ElementActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 
 public class CoveredElement {
     private final WebDriver driver;
@@ -16,6 +15,6 @@ public void handleCoveredElement(){
     ElementActions.scrollToElement(driver,btn);
     ElementActions.clickElement(driver,btn);
     ElementActions.scrollToElement(driver,assertion);
-    ElementActions.assertTextContainsText(driver,assertion,"Mission");
+    ElementActions.assertElementContainsText(driver,assertion,"Mission");
 }
 }

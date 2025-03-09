@@ -171,7 +171,7 @@ public static void clickElement(WebDriver driver, By locator){
             return false; // Element is not clickable or not found
         }
     }
-    public static void assertTextContainsText(WebDriver driver,By locator, String text){
+    public static void assertElementContainsText(WebDriver driver, By locator, String text){
         try{
         Assert.assertTrue(ElementActions.getText(driver,locator).contains(text));
         CustomLogger.logger.info("text [{}] was found at locator text [{}]",text,locator);

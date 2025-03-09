@@ -3,13 +3,8 @@ package pages.automationPlayGround;
 import engine.actions.ElementActions;
 import engine.actions.WaitActions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 
 public class UploadFile {
     private final WebDriver driver;
@@ -23,8 +18,8 @@ String path="C:\\Users\\USER\\Pictures\\Screenshots\\";
         ElementActions.changeElementAttributeJSExecutor(driver,inputField,"style", "display:block;");
         WaitActions.explicitWait(driver,5).until(ExpectedConditions.visibilityOfElementLocated(inputField));
         ElementActions.typeInElement(driver,inputField,path+"1.png \n "+path+"2.png");
-        ElementActions.assertTextContainsText(driver,numOfFiles,"2");
+        ElementActions.assertElementContainsText(driver,numOfFiles,"2");
         ElementActions.typeInElement(driver,inputField,path+"3.png");
-        ElementActions.assertTextContainsText(driver,numOfFiles,"3");
+        ElementActions.assertElementContainsText(driver,numOfFiles,"3");
     }
 }

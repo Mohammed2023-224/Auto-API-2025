@@ -17,6 +17,7 @@ SortableList sortableList;
     CoveredElement coveredElement;
     UploadFile uploadFile;
     DownloadFile downloadFile;
+    OnboardingModelPopup onboardingModelPopup;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -80,6 +81,11 @@ public void dynamicTableTest(){
         homePage.clickPage("Download File");
         downloadFile.handleDownload();
     }
+    @Test
+    public void onboardingPopUpTest(){
+        homePage.clickPage("Onboarding Modal Popup");
+        onboardingModelPopup.handlePopup();
+    }
 
 
     @BeforeMethod()
@@ -100,6 +106,7 @@ private void initClasses(){
     coveredElement=new CoveredElement(driver);
     uploadFile=new UploadFile(driver);
     downloadFile=new DownloadFile(driver);
+    onboardingModelPopup=new OnboardingModelPopup(driver);
 }
 
 }
