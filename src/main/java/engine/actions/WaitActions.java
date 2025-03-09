@@ -1,5 +1,6 @@
 package engine.actions;
 
+import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,6 +34,7 @@ public class WaitActions {
 
     public static void waitForAlert(WebDriver driver,int time){
         explicitWait(driver,time).until(ExpectedConditions.alertIsPresent());
+        CustomLogger.logger.info("Waited for alert to be present for [{}]",time);
     }
 
 
@@ -42,24 +44,33 @@ public class WaitActions {
             case "visible":
                 if(!ElementActions.isElementVisible(driver, locator)){
                 explicitWait(driver,time).until(ExpectedConditions.visibilityOfElementLocated(locator));
+                    CustomLogger.logger.info("Waited for [{}] to be visible for [{}]",locator,time);
                 }
                 break;
             case "invisible":
                 if(ElementActions.isElementVisible(driver, locator)){
                     explicitWait(driver,time).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+                    CustomLogger.logger.info("Waited for [{}] to be invisible for [{}]",locator,time);
                 }
                 break;
             case "clickable":
             case "enabled":
                     if(!ElementActions.isElementClickable(driver, locator)){
                 explicitWait(driver,time).until(ExpectedConditions.elementToBeClickable(locator));
-                }
+                        CustomLogger.logger.info("Waited for [{}] to be clickable for [{}]",locator,time);
+                    }
                     break;
         }
     }
-    public static boolean waitForFileToBeDownloaded(WebDriver driver,String path){
+    public static boolean waitForFileToBeDownloaded(WebDriver driver,String path,int time){
         File file = new File(path);
-        explicitWait(driver,5).until(x ->file.exists() && file.canRead());
+        try{
+        explicitWait(driver,time).until(x ->file.exists() && file.canRead());
+            CustomLogger.logger.info("Waited for file [{}] to appear for [{}]",path,time);
+        }
+        catch (Exception e){
+            CustomLogger.logger.info("The file [{}] didn't appear after [{}] ",path,time);
+        }
         return file.exists();
     }
 }

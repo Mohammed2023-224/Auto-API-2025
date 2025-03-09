@@ -91,7 +91,7 @@ public void handleForm(){
             (secondFile+" "+firstFile));
     Assert.assertTrue(driver.findElement(salary).getDomProperty("placeholder").contains("You should not provide this"));
     ElementActions.clickElement(driver,downloadFile);
-WaitActions.waitForFileToBeDownloaded(driver,path+thirdFile);
+WaitActions.waitForFileToBeDownloaded(driver,path+thirdFile,5);
     Assert.assertTrue(SystemMethods.checkExistenceOfFile(path+thirdFile));
     Assert.assertTrue(SystemMethods.readFileContent(path+thirdFile).contains("File downloaded by AutomationCamp"));
     ElementActions.typeInElement(driver,city,"test");

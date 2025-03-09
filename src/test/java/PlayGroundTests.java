@@ -15,6 +15,8 @@ SortableList sortableList;
     ShadowDomTest shadowDomTest;
     StarsRatingWidget starsRatingWidget;
     CoveredElement coveredElement;
+    UploadFile uploadFile;
+    DownloadFile downloadFile;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -67,7 +69,20 @@ public void dynamicTableTest(){
         coveredElement.handleCoveredElement();
     }
 
-@BeforeMethod()
+    @Test
+    public void uploadFileTest(){
+        homePage.clickPage("Upload File");
+        uploadFile.handleUploads();
+    }
+
+    @Test
+    public void DownloadFileTest(){
+        homePage.clickPage("Download File");
+        downloadFile.handleDownload();
+    }
+
+
+    @BeforeMethod()
 public void navigateToHomePage(){
     homePage.navigateToWebSite();
 }
@@ -83,6 +98,8 @@ private void initClasses(){
     shadowDomTest=new ShadowDomTest(driver);
     starsRatingWidget=new StarsRatingWidget(driver);
     coveredElement=new CoveredElement(driver);
+    uploadFile=new UploadFile(driver);
+    downloadFile=new DownloadFile(driver);
 }
 
 }

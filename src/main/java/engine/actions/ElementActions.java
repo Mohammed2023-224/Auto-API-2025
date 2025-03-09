@@ -65,7 +65,7 @@ public static void clickElement(WebDriver driver, By locator){
 
     /* --------------------------- Keyboard actions ------------------------------*/
     public static void typeInElement(WebDriver driver, By locator,String text){
-        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
+        WaitActions.explicitWaitByCondition(driver,locator,"clickable",5);
     driver.findElement(locator).clear();
     driver.findElement(locator).sendKeys(text);
         CustomLogger.logger.info("typing [{}] in element: [{}]",text,locator);
@@ -193,4 +193,17 @@ public static void clickElement(WebDriver driver, By locator){
         }
     }
 
+    /* -------------------- Alter elements --------------------------*/
+    public static void changeElementAttributeJSExecutor(WebDriver driver, By locator, String property,String newValue){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
+                driver.findElement(locator), property,newValue);
+        CustomLogger.logger.info("change locator [{}] attribute value to [{}]", locator,newValue);
+    }
+
+    public static void executeJSScript(WebDriver driver, String script){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript(script);
+        CustomLogger.logger.info("execute java script  [{}]", script);
+    }
 }
