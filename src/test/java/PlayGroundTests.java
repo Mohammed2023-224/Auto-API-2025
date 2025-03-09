@@ -18,6 +18,8 @@ SortableList sortableList;
     UploadFile uploadFile;
     DownloadFile downloadFile;
     OnboardingModelPopup onboardingModelPopup;
+    RightClick rightClick;
+    MouseHover mouseHover;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -86,6 +88,16 @@ public void dynamicTableTest(){
         homePage.clickPage("Onboarding Modal Popup");
         onboardingModelPopup.handlePopup();
     }
+    @Test
+    public void rightClickTest(){
+        homePage.clickPage("Right-Click Context Menu");
+        rightClick.handleRightClick();
+    }
+    @Test
+    public void mouseHoverTest(){
+        homePage.clickPage("Mouse Hover");
+        mouseHover.handleHovering();
+    }
 
 
     @BeforeMethod()
@@ -107,6 +119,8 @@ private void initClasses(){
     uploadFile=new UploadFile(driver);
     downloadFile=new DownloadFile(driver);
     onboardingModelPopup=new OnboardingModelPopup(driver);
+    rightClick=new RightClick(driver);
+    mouseHover=new MouseHover(driver);
 }
 
 }

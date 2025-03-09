@@ -172,25 +172,13 @@ public static void clickElement(WebDriver driver, By locator){
         }
     }
     public static void assertElementContainsText(WebDriver driver, By locator, String text){
-        try{
         Assert.assertTrue(ElementActions.getText(driver,locator).contains(text));
         CustomLogger.logger.info("text [{}] was found at locator text [{}]",text,locator);
-    }
-        catch (AssertionError e){
-            CustomLogger.logger.info("Assertion failed Expected to contain {} and found {}"
-                    ,text,ElementActions.getText(driver,locator));
-        }
         }
 
     public static void assertTextEquals(WebDriver driver,By locator, String text){
-        try{
             Assert.assertEquals(text, ElementActions.getText(driver, locator));
             CustomLogger.logger.info("text [{}] equals text found at locator [{}]",text,locator);
-        }
-        catch (AssertionError e){
-            CustomLogger.logger.info("Assertion failed Expected text {} but found {}"
-                    ,text,ElementActions.getText(driver,locator));
-        }
     }
 
     /* -------------------- Alter elements --------------------------*/
