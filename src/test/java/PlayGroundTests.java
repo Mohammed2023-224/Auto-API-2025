@@ -21,6 +21,7 @@ SortableList sortableList;
     RightClick rightClick;
     MouseHover mouseHover;
     ChangingIframe changingIframe;
+    NavigationMenu navigationMenu;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -104,6 +105,11 @@ public void dynamicTableTest(){
         homePage.clickPage("Changeable Iframe");
         changingIframe.handleChangingIframe();
     }
+    @Test
+    public void navigationMeuTest(){
+        homePage.clickPage("Navigation Menu");
+        navigationMenu.handleNavigation();
+    }
 
 
     @BeforeMethod()
@@ -128,6 +134,7 @@ private void initClasses(){
     rightClick=new RightClick(driver);
     mouseHover=new MouseHover(driver);
     changingIframe=new ChangingIframe(driver);
+    navigationMenu=new NavigationMenu(driver);
 }
 
 }
