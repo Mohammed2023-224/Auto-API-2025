@@ -20,6 +20,7 @@ SortableList sortableList;
     OnboardingModelPopup onboardingModelPopup;
     RightClick rightClick;
     MouseHover mouseHover;
+    ChangingIframe changingIframe;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -98,6 +99,11 @@ public void dynamicTableTest(){
         homePage.clickPage("Mouse Hover");
         mouseHover.handleHovering();
     }
+    @Test
+    public void changingIframe(){
+        homePage.clickPage("Changeable Iframe");
+        changingIframe.handleChangingIframe();
+    }
 
 
     @BeforeMethod()
@@ -121,6 +127,7 @@ private void initClasses(){
     onboardingModelPopup=new OnboardingModelPopup(driver);
     rightClick=new RightClick(driver);
     mouseHover=new MouseHover(driver);
+    changingIframe=new ChangingIframe(driver);
 }
 
 }
