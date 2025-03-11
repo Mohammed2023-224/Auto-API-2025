@@ -24,6 +24,8 @@ SortableList sortableList;
     NavigationMenu navigationMenu;
     RedirectChain redirectChain;
     BudgetTracker budgetTracker;
+    CodeGenerator codeGenerator;
+    Slider slider;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -122,6 +124,16 @@ public void dynamicTableTest(){
         homePage.clickPage("Budget Tracker");
         budgetTracker.handleBudget();
     }
+    @Test
+    public void codeGenerator(){
+        homePage.clickPage("QR Code Generator");
+        codeGenerator.handleCode();
+    }
+    @Test
+    public void slider(){
+        homePage.clickPage("Rating Range Slider");
+        slider.handleSlider();
+    }
 
 
     @BeforeMethod()
@@ -149,6 +161,8 @@ private void initClasses(){
     navigationMenu=new NavigationMenu(driver);
     redirectChain=new RedirectChain(driver);
     budgetTracker=new BudgetTracker(driver);
+    codeGenerator =new CodeGenerator(driver);
+    slider=new Slider(driver);
 }
 
 }
