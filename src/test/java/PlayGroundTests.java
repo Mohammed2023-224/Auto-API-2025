@@ -22,6 +22,8 @@ SortableList sortableList;
     MouseHover mouseHover;
     ChangingIframe changingIframe;
     NavigationMenu navigationMenu;
+    RedirectChain redirectChain;
+    BudgetTracker budgetTracker;
 @Test
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
@@ -110,6 +112,16 @@ public void dynamicTableTest(){
         homePage.clickPage("Navigation Menu");
         navigationMenu.handleNavigation();
     }
+    @Test
+    public void redirectChainTest(){
+        homePage.clickPage("Redirect Chain");
+        redirectChain.handleRedirection();
+    }
+    @Test
+    public void handleBudget(){
+        homePage.clickPage("Budget Tracker");
+        budgetTracker.handleBudget();
+    }
 
 
     @BeforeMethod()
@@ -135,6 +147,8 @@ private void initClasses(){
     mouseHover=new MouseHover(driver);
     changingIframe=new ChangingIframe(driver);
     navigationMenu=new NavigationMenu(driver);
+    redirectChain=new RedirectChain(driver);
+    budgetTracker=new BudgetTracker(driver);
 }
 
 }

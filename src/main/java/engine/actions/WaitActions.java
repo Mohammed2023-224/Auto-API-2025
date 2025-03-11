@@ -21,11 +21,12 @@ public class WaitActions {
         return explicitWait;
     }
 
-    public static Wait fluentWait(WebDriver driver){
+    public static Wait fluentWait(WebDriver driver,Duration timeOut, Duration pollingTime,String message){
         if (fluentWait ==null){
-            fluentWait=new FluentWait(driver);
+         fluentWait=new FluentWait(driver).withTimeout(timeOut).
+                    pollingEvery(pollingTime).withMessage(message);
         }
-        return fluentWait;
+        return  fluentWait;
     }
 
     public static void implicitWait(WebDriver driver,int time){

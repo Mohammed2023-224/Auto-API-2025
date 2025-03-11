@@ -180,6 +180,10 @@ public static void clickElement(WebDriver driver, By locator){
             Assert.assertEquals(text, ElementActions.getText(driver, locator));
             CustomLogger.logger.info("text [{}] equals text found at locator [{}]",text,locator);
     }
+    public static void assertElementVisible(WebDriver driver,By locator){
+            Assert.assertTrue(isElementVisible(driver,locator));
+            CustomLogger.logger.info("Element [{}] is visible",locator);
+    }
 
     /* -------------------- Alter elements --------------------------*/
     public static void changeElementAttributeJSExecutor(WebDriver driver, By locator, String property,String newValue){
