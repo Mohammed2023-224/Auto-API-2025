@@ -14,10 +14,17 @@ public class OnboardingModelPopup {
     By textAfterClose=By.cssSelector(".title");
 
     public void handlePopup(){
-        ElementActions.assertElementContainsText(driver,text,"Welcome");
+        if(ElementActions.isElementVisible(driver,text)){
+            ElementActions.assertElementContainsText(driver,text,"Welcome");
+            ElementActions.clickElement(driver,closePopup);
+            ElementActions.assertElementContainsText(driver,textAfterClose,"Peter");
+        }
+        else {
+        ElementActions.assertElementContainsText(driver,text,"Application");
         ElementActions.clickElement(driver,closePopup);
-        ElementActions.assertElementContainsText(driver,textAfterClose,"Peter");
+        ElementActions.assertElementContainsText(driver,textAfterClose,"Welcome");
         ElementActions.clickElement(driver,closePopup);
-        ElementActions.assertElementContainsText(driver,text,"Welcome");
+        ElementActions.assertElementContainsText(driver,text,"Application");
+        }
     }
 }

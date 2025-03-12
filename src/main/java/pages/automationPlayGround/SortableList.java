@@ -1,22 +1,11 @@
 package pages.automationPlayGround;
 
 import engine.actions.ElementActions;
-import engine.actions.WaitActions;
-import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.pagefactory.ByChained;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+
 
 public class SortableList {
 private final WebDriver driver;
@@ -34,6 +23,7 @@ By checkOrder= By.id("check");
         return By.xpath(xpath);
     }
 public void handleSorting(){
+        ElementActions.scrollToElement(driver,ratings(2));
     ArrayList<String> list=new ArrayList<>();
     list.add("Jeff Bezos");
     list.add("Bill Gates");

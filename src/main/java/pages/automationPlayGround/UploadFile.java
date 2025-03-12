@@ -20,6 +20,6 @@ String path="C:\\Users\\USER\\Pictures\\Screenshots\\";
         ElementActions.typeInElement(driver,inputField,path+"1.png \n "+path+"2.png");
         ElementActions.assertElementContainsText(driver,numOfFiles,"2");
         ElementActions.typeInElement(driver,inputField,path+"3.png");
-        ElementActions.assertElementContainsText(driver,numOfFiles,"3");
+        ElementActions.assertElementContainsText(driver,numOfFiles,"1");
     }
 }

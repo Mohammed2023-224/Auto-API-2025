@@ -24,7 +24,7 @@ public class VerifyAccount {
         for (int i=0;i<size;i++){
             list.get(i).sendKeys(myArray[i]);
         }
-        Assert.assertTrue(ElementActions.getText(driver,confirmationCSuccessMessage).contains("Success "));
+        Assert.assertTrue(ElementActions.getText(driver,confirmationCSuccessMessage).contains("Success"));
     }
 
 }

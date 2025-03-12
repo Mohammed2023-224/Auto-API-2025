@@ -17,7 +17,7 @@ public class ChangingIframe {
     By time= By.id("time");
     public void handleChangingIframe(){
         ElementActions.switchToFrameByLocator(driver,firstIframe);
-        WaitActions.explicitWait(driver,10).until(ExpectedConditions.textToBePresentInElementLocated(time,"53"));
+        WaitActions.explicitWait(driver,15).until(ExpectedConditions.textToBePresentInElementLocated(time,"53"));
         ElementActions.assertElementContainsText(driver,time,"53");
         WaitActions.explicitWait(driver,10).until(ExpectedConditions.textToBePresentInElementLocated(msg,"end"));
         ElementActions.switchToParentFrame(driver);

@@ -82,14 +82,14 @@ public void navigateToHomePage(){
 
     @BeforeClass
     private void initClasses(){
-        popUpWindows=new PopUpWindows(driver);
-        homePage=new HomePage(driver);
-        waitActionsPage=new WaitActionsPage(driver);
-        frames=new Frames(driver);
-        mouseActions=new MouseActions(driver);
-        keyboardActions=new KeyboardActions(driver);
-        formPage=new FormPage(driver);
-        samplePage=new SamplePage(driver);
-        advancedUI=new AdvancedUI(driver);
+        popUpWindows=new PopUpWindows(getDriver());
+        homePage=new HomePage(getDriver());
+        waitActionsPage=new WaitActionsPage(getDriver());
+        frames=new Frames(getDriver());
+        mouseActions=new MouseActions(getDriver());
+        keyboardActions=new KeyboardActions(getDriver());
+        formPage=new FormPage(getDriver());
+        samplePage=new SamplePage(getDriver());
+        advancedUI=new AdvancedUI(getDriver());
     }
 }

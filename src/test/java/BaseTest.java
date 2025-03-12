@@ -8,24 +8,28 @@ import org.testng.annotations.*;
 
 @Listeners(TestNGListeners.class)
 public class BaseTest {
-    public WebDriver driver;
-
+    private static final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+    public WebDriver getDriver() {
+        return threadLocalDriver.get();
+    }
     @BeforeClass
     public void startDriver(ITestContext context){
-        driver=new SetupDriver().initDriver("chrome");
-    context.setAttribute("driver",driver);
+        WebDriver driver = new SetupDriver().initDriver("chrome");
+        threadLocalDriver.set(driver);
+        context.setAttribute("driver",getDriver());
     }
 
 //    @AfterMethod
 //    public void refreshDriverAndDeleteCookies(){
-//        driver.navigate().refresh();
-//        driver.manage().deleteAllCookies();
+//        getDriver().navigate().refresh();
+//        getDriver().manage().deleteAllCookies();
 //        CustomLogger.logger.info("delete all cookies and refresh page");
 //    }
 //
 //    @AfterClass
 //    public void tearDriver(){
-//        driver.quit();
+//        getDriver().quit();
+//                threadLocalDriver.remove(); // Clean up the ThreadLocal
 //        CustomLogger.logger.info("Close driver");
 //    }
 

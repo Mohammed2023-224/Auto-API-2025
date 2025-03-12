@@ -3,7 +3,6 @@ package engine.actions;
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.Optional;
 
@@ -15,18 +14,13 @@ public class WaitActions {
  static Wait fluentWait;
 
     public static Wait explicitWait(WebDriver driver, int time){
-        if (explicitWait ==null){
-            explicitWait=new WebDriverWait(driver,Duration.ofSeconds(time));
-        }
-        return explicitWait;
+            return new WebDriverWait(driver,Duration.ofSeconds(time));
     }
 
     public static Wait fluentWait(WebDriver driver,Duration timeOut, Duration pollingTime,String message){
-        if (fluentWait ==null){
-         fluentWait=new FluentWait(driver).withTimeout(timeOut).
+    return  new FluentWait(driver).withTimeout(timeOut).
                     pollingEvery(pollingTime).withMessage(message);
-        }
-        return  fluentWait;
+
     }
 
     public static void implicitWait(WebDriver driver,int time){

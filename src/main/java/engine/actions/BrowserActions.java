@@ -1,14 +1,9 @@
 package engine.actions;
 
 import engine.reporter.CustomLogger;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BrowserActions {
     public static void navigateToURL(WebDriver driver,String url){
@@ -32,7 +27,7 @@ public class BrowserActions {
     }
 
 
-    public static void navigateWindowByNum(WebDriver driver, int windowNum){
+    public synchronized static void navigateWindowByNum(WebDriver driver, int windowNum){
         List<String> window= new ArrayList<>();
         window.addAll(driver.getWindowHandles());
         driver.switchTo().window(window.get(windowNum));

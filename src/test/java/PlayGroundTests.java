@@ -3,8 +3,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.automationPlayGround.*;
 
-import java.time.Duration;
-
 public class PlayGroundTests extends BaseTest{
 HomePage homePage;
 DynamicTableTab dynamicTableTab;
@@ -30,11 +28,11 @@ SortableList sortableList;
 public void dynamicTableTest(){
     homePage.clickPage("Dynamic Table");
     dynamicTableTab.handleDynamicTable();
-    driver.navigate().refresh();
+    getDriver().navigate().refresh();
     dynamicTableTab.handleDynamicTable();
-    driver.navigate().refresh();
+    getDriver().navigate().refresh();
     dynamicTableTab.handleDynamicTable();
-    driver.navigate().refresh();
+    getDriver().navigate().refresh();
     dynamicTableTab.handleDynamicTable();
 }
     @Test
@@ -143,26 +141,26 @@ public void navigateToHomePage(){
 
 @BeforeClass
 private void initClasses(){
-    homePage=new HomePage(driver);
-    dynamicTableTab=new DynamicTableTab(driver);
-    verifyAccount=new VerifyAccount(driver);
-    tagsInputBox=new TagsInputBox(driver);
-    multiLevelDD=new MultiLevelDD(driver);
-    sortableList=new SortableList(driver);
-    shadowDomTest=new ShadowDomTest(driver);
-    starsRatingWidget=new StarsRatingWidget(driver);
-    coveredElement=new CoveredElement(driver);
-    uploadFile=new UploadFile(driver);
-    downloadFile=new DownloadFile(driver);
-    onboardingModelPopup=new OnboardingModelPopup(driver);
-    rightClick=new RightClick(driver);
-    mouseHover=new MouseHover(driver);
-    changingIframe=new ChangingIframe(driver);
-    navigationMenu=new NavigationMenu(driver);
-    redirectChain=new RedirectChain(driver);
-    budgetTracker=new BudgetTracker(driver);
-    codeGenerator =new CodeGenerator(driver);
-    slider=new Slider(driver);
+    homePage=new HomePage(getDriver());
+    dynamicTableTab=new DynamicTableTab(getDriver());
+    verifyAccount=new VerifyAccount(getDriver());
+    tagsInputBox=new TagsInputBox(getDriver());
+    multiLevelDD=new MultiLevelDD(getDriver());
+    sortableList=new SortableList(getDriver());
+    shadowDomTest=new ShadowDomTest(getDriver());
+    starsRatingWidget=new StarsRatingWidget(getDriver());
+    coveredElement=new CoveredElement(getDriver());
+    uploadFile=new UploadFile(getDriver());
+    downloadFile=new DownloadFile(getDriver());
+    onboardingModelPopup=new OnboardingModelPopup(getDriver());
+    rightClick=new RightClick(getDriver());
+    mouseHover=new MouseHover(getDriver());
+    changingIframe=new ChangingIframe(getDriver());
+    navigationMenu=new NavigationMenu(getDriver());
+    redirectChain=new RedirectChain(getDriver());
+    budgetTracker=new BudgetTracker(getDriver());
+    codeGenerator =new CodeGenerator(getDriver());
+    slider=new Slider(getDriver());
 }
 
 }
