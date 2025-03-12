@@ -14,7 +14,7 @@ public class OnboardingModelPopup {
     By textAfterClose=By.cssSelector(".title");
 
     public void handlePopup(){
-        if(ElementActions.isElementVisible(driver,text)){
+        if(ElementActions.getText(driver,text).contains("Welcome")){
             ElementActions.assertElementContainsText(driver,text,"Welcome");
             ElementActions.clickElement(driver,closePopup);
             ElementActions.assertElementContainsText(driver,textAfterClose,"Peter");

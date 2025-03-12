@@ -1,6 +1,7 @@
 package pages.automationPlayGround;
 
 import engine.actions.ElementActions;
+import engine.actions.WaitActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -23,6 +24,7 @@ By checkOrder= By.id("check");
         return By.xpath(xpath);
     }
 public void handleSorting(){
+    WaitActions.explicitWaitByCondition(driver,ratings(2),"visible",3);
         ElementActions.scrollToElement(driver,ratings(2));
     ArrayList<String> list=new ArrayList<>();
     list.add("Jeff Bezos");

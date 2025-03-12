@@ -21,23 +21,18 @@ public class RedirectChain {
         DevToolsActions devToolsActions=DevToolsActions.createDevToolsActions(driver);
         devToolsActions.createSession();
         devToolsActions.enableNetwork();
-
         Set<String> uniqueUrls = devToolsActions.filterAllUrlsContainingText("redirect");
         List<String> expectedTexts = Arrays.asList("second", "third", "fourth", "fifth", "sixth", "last");
-
-        // Click to start redirection
         ElementActions.clickElement(driver, directBtn);
 WaitActions.explicitWaitByCondition(driver,goBack,"visible",15);
-
-
         for (String expectedText : expectedTexts) {
             boolean found = uniqueUrls.stream().anyMatch(url -> url.contains(expectedText));
             Assert.assertTrue(found, "Expected text '" + expectedText + "' not found in captured URLs.");
         }
-        // Navigate back to the main page
         ElementActions.assertElementVisible(driver, goBack);
         ElementActions.clickElement(driver, goBack);
         WaitActions.explicitWaitByCondition(driver, directBtn, "visible", 5);
         ElementActions.assertElementVisible(driver, directBtn);
+        devToolsActions.closeSession();
     }
 }
