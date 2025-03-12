@@ -24,8 +24,6 @@ By checkOrder= By.id("check");
         return By.xpath(xpath);
     }
 public void handleSorting(){
-    WaitActions.explicitWaitByCondition(driver,ratings(2),"visible",3);
-        ElementActions.scrollToElement(driver,ratings(2));
     ArrayList<String> list=new ArrayList<>();
     list.add("Jeff Bezos");
     list.add("Bill Gates");
@@ -39,6 +37,8 @@ public void handleSorting(){
     list.add("Larry Page");
 
    for (int i=0; i<list.size();i++){
+       WaitActions.explicitWaitByCondition(driver,ratings(i+2),"visible",3);
+       ElementActions.scrollToElement(driver,ratings(i+2));
        ElementActions.dragAndDropByMouse(driver,personElement(list.get(i),false), ratings(i+2));
     }
     ElementActions.clickElement(driver,checkOrder);
