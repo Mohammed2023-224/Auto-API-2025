@@ -31,7 +31,7 @@ public void handleBudget(){
     ElementActions.assertElementVisible(driver,dateFields("1"));
     ElementActions.typeInElement(driver,dateFields("1"),"04/11/2025");
     ElementActions.typeInElement(driver,textFields("1"),"test");
-    ElementActions.selectDDLOption(driver,selectionFields("1"),"Income");
+    ElementActions.selectDDLOptionText(driver,selectionFields("1"),"Income");
     ElementActions.typeInElement(driver,amountFields("1"),"5");
     ElementActions.clickElement(driver,total);
     ElementActions.assertElementContainsText(driver,total,"$5.00");
@@ -40,7 +40,7 @@ public void handleBudget(){
     ElementActions.assertElementVisible(driver,dateFields("2"));
     ElementActions.typeInElement(driver,dateFields("2"),"02/11/2025");
     ElementActions.typeInElement(driver,textFields("2"),"test");
-    ElementActions.selectDDLOption(driver,selectionFields("2"),"Expense");
+    ElementActions.selectDDLOptionText(driver,selectionFields("2"),"Expense");
     ElementActions.typeInElement(driver,amountFields("2"),"2");
     ElementActions.clickElement(driver,total);
     ElementActions.assertElementContainsText(driver,total,"$3.00");

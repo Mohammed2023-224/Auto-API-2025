@@ -12,11 +12,12 @@ WebDriver driver;
 public HomePage(WebDriver driver){
     this.driver=driver;
 }
-public By userNameField=By.name("username");
-    public By passwordField=By.name("password");
-    public By loginButton=By.xpath("//input[@value='Log In']");
-    public By registerButton=By.xpath("//a[text()='Register']");
-    public By forgetInfoButton=By.xpath("//a[text()='Forgot login info?']");
+private final By userNameField=By.name("username");
+    private final By passwordField=By.name("password");
+    private final By loginButton=By.xpath("//input[@value='Log In']");
+    private final By registerButton=By.xpath("//a[text()='Register']");
+    private final By forgetInfoButton=By.xpath("//a[text()='Forgot login info?']");
+    private final By loginError=By.cssSelector(".error");
 
 private By headerLinks(String text){
     return By.xpath("//div[@id='headerPanel']//li[@class='"+text+"']");
@@ -72,5 +73,13 @@ public void clickFooterLink(String option ){
     public void clickPassword(String text ){
         ElementActions.typeInElement(driver,passwordField,text);
     }
+@Step("Get error text")
+    public String getErrorText(){
+    return ElementActions.getText(driver,loginError);
+}
+
+public void assertError(String text){
+    ElementActions.assertElementContainsText(driver,loginError,text);
+}
 
 }

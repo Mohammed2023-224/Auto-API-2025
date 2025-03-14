@@ -1,6 +1,7 @@
 package pages.parabank;
 
 import engine.actions.ElementActions;
+import engine.actions.WaitActions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +15,8 @@ public class RegisterPage {
     }
 // can be consolidated in one dynamic method returning by class
     private final By firstNameField=By.name("customer.firstName");
+    private final By matchPasswordsError=By.id("repeatedPassword.errors");
+    private final By missingFirstNameError=By.id("customer.firstName.errors");
     private final By lastNameField=By.name("customer.lastName");
     private final By AddressField=By.name("customer.address.street");
     private final By cityField=By.name("customer.address.city");
@@ -25,6 +28,7 @@ public class RegisterPage {
     private final By passwordField=By.name("customer.password");
     private final By confirmField=By.name("repeatedPassword");
     private final By registerButton=By.xpath("//input[@value='Register']");
+    private final By welcomeMessage=By.xpath("//p[text()='Your account was created successfully. You are now logged in.']");
     @Step("Type in first name field [{text}]")
     public void typeInFirstNameField(String text){
         ElementActions.typeInElement(driver,firstNameField,text);
@@ -92,6 +96,19 @@ public class RegisterPage {
     @Step("click register ")
     public void clickRegisterButton( ){
         ElementActions.clickElement(driver,registerButton);
+    }
+
+    public void assertMissingFirstNameError(){
+        WaitActions.explicitWaitByCondition(driver,missingFirstNameError,"visible",4);
+        ElementActions.assertElementContainsText(driver,missingFirstNameError,"required");
+    }
+    public void assertWelcomeMessage(){
+        WaitActions.explicitWaitByCondition(driver,welcomeMessage,"visible",4);
+        ElementActions.assertElementVisible(driver,welcomeMessage);
+    }
+    public void assertNotMatchingPassword(){
+        WaitActions.explicitWaitByCondition(driver,matchPasswordsError,"visible",4);
+        ElementActions.assertElementContainsText(driver,matchPasswordsError,"did not match");
     }
 
 }

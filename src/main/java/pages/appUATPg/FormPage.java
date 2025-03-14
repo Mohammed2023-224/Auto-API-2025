@@ -66,14 +66,14 @@ public void handleForm(){
     Assert.assertTrue(ElementActions.getText(driver,redValidate).contains("SELENIUM"));
     ElementActions.clickElement(driver,options("PROTRACTOR"));
     Assert.assertTrue(ElementActions.getText(driver,redValidate).contains("PROTRACTOR"));
-    ElementActions.selectDDLOption(driver,selectTool,"Cypress");
+    ElementActions.selectDDLOptionText(driver,selectTool,"Cypress");
     Assert.assertTrue(ElementActions.getText(driver,selectToolValidate).contains("cyp"));
-    ElementActions.selectDDLOption(driver,multipleSelection,"Python");
+    ElementActions.selectDDLOptionText(driver,multipleSelection,"Python");
     Assert.assertTrue(ElementActions.getText(driver,multipleSelectionValidate).contains("python"));
-    ElementActions.selectDDLOption(driver,multipleSelection,"Java");
+    ElementActions.selectDDLOptionText(driver,multipleSelection,"Java");
     Assert.assertTrue(ElementActions.getText(driver,multipleSelectionValidate).contains("java"));
     ElementActions.pressKey(driver,multipleSelection, Keys.CONTROL);
-    ElementActions.selectDDLOption(driver,multipleSelection,"TypeScript");
+    ElementActions.selectDDLOptionText(driver,multipleSelection,"TypeScript");
     Assert.assertTrue(ElementActions.getText(driver,multipleSelectionValidate).contains("java,python,typescript"));
     ElementActions.typeInElement(driver,notesField,"test");
     Assert.assertTrue(ElementActions.getText(driver,notesFieldValidate).contains("test"));

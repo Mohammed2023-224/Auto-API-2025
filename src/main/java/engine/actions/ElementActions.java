@@ -3,8 +3,11 @@ package engine.actions;
 import engine.reporter.CustomLogger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.List;
 
 public class ElementActions {
 /* ----------------------- mouse Actions ----------------------------------------*/
@@ -84,18 +87,34 @@ public static void clickElement(WebDriver driver, By locator){
     }
 
     /* -------------------- Lists actions ------------------------------*/
-    public static void selectDDLOption(WebDriver driver, By locator,String option){
+    public static void selectDDLOptionText(WebDriver driver, By locator,String option){
         WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
-    Select select=new Select(driver.findElement(locator));
+        WaitActions.explicitWait(driver, 6).until(x -> {
+            Select dynamicSelect = new Select(driver.findElement(locator));
+            return !dynamicSelect.getOptions().isEmpty();
+        });
+        Select select=new Select(driver.findElement(locator));
         select.selectByVisibleText(option);
         CustomLogger.logger.info("Select option with text [{}] from locator [{}]",option,locator);
     }
+    public static void selectDDLOptionValue(WebDriver driver, By locator,String option){
+        WaitActions.explicitWait(driver, 6).until(x -> {
+            Select dynamicSelect = new Select(driver.findElement(locator));
+            return !dynamicSelect.getOptions().isEmpty();
+        });
+        Select select=new Select(driver.findElement(locator));
+        select.selectByValue(option);
+        CustomLogger.logger.info("Select option with value [{}] from locator [{}]",option,locator);
+    }
 
     public static void selectDDLFirstOption(WebDriver driver, By locator ){
-        WaitActions.explicitWaitByCondition(driver,locator,"visible",5);
-    Select select=new Select(driver.findElement(locator));
-        select.getFirstSelectedOption();
-        CustomLogger.logger.info("Select first option from locator [{}]",locator);
+        WaitActions.explicitWait(driver, 6).until(x -> {
+            Select dynamicSelect = new Select(driver.findElement(locator));  // Reload select each time
+            return !dynamicSelect.getOptions().isEmpty();
+        });
+        Select select=new Select(driver.findElement(locator));
+            select.getFirstSelectedOption();
+        CustomLogger.logger.info("Select first option");
     }
 /* ---------------------------- getting info actions-------------------*/
     public static  String getText(WebDriver driver, By locator){
