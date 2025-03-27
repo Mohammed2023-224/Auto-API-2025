@@ -28,9 +28,10 @@ public class APITests {
             System.out.println(header.getValue());
         }
         Assert.assertEquals((int) (Integer) APIActions.getValueByPath(res, "page"), 2);
+
        User user= (User) APIActions.deserializeUser(res, User.class);
        System.out.println(user.getPage());
-        System.out.println(user.getData().get(0));
+         user.getData().forEach(userData -> System.out.println(userData.getId() +" "+ userData.getEmail()));
         System.out.println(user.getSupport().getUrl());
 
     }

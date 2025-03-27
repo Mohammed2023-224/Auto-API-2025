@@ -1,20 +1,16 @@
 package engine.pojo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
-public int page;
+    public int page;
     public int per_page;
     public int total;
     public int total_pages;
-    public ArrayList<Object> data;
+    private List<UserData> data;
     public Support support;
-    public int id;
-    public String email ;
-    public String last_name ;
-    public String first_name ;
-    public String avatar ;
 
 
     public int getPage() {
@@ -49,13 +45,8 @@ public int page;
         this.total_pages = total_pages;
     }
 
-    public ArrayList<Object> getData() {
-        return data;
-    }
-
-    public void setData(ArrayList<Object> data) {
-        this.data = data;
-    }
+    public List<UserData> getData() { return data; }
+    public void setData(List<UserData> data) { this.data = data; }
 
     public Support getSupport() {
         return support;
@@ -65,45 +56,6 @@ public int page;
         this.support = support;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
 
 
@@ -129,4 +81,27 @@ public int page;
         }
     }
 
+    public static class UserData {
+        private int id;
+        private String email;
+        private String first_name;
+        private String last_name;
+        private String avatar;
+
+        // Getters & Setters
+        public int getId() { return id; }
+        public void setId(int id) { this.id = id; }
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+
+        public String getFirst_name() { return first_name; }
+        public void setFirst_name(String first_name) { this.first_name = first_name; }
+
+        public String getLast_name() { return last_name; }
+        public void setLast_name(String last_name) { this.last_name = last_name; }
+
+        public String getAvatar() { return avatar; }
+        public void setAvatar(String avatar) { this.avatar = avatar; }
+    }
 }
