@@ -47,7 +47,7 @@ public class User {
         this.total_pages = total_pages;
     }
 
-    public Object getData() { return data; }  // Can be a single object or a list
+    private Object getData() { return data; }  // Can be a single object or a list
     public void setData(Object data) { this.data = data; }
 
     public Support getSupport() {
@@ -59,12 +59,13 @@ public class User {
     }
 
     public UserData getSingleUserData() {
-        return (UserData) APIActions.getSingleData(data,UserData.class);
+        return (UserData) PojoHelpers.getSingleData(data,UserData.class);
     }
 
     public List<UserData> getUserList() {
-        return (List<UserData>) APIActions.getDataInList(data, UserData.class);
+        return (List<UserData>) PojoHelpers.getDataInList(data, UserData.class);
     }
+
 
     public class Support{
         public String text ;

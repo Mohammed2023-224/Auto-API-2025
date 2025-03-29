@@ -1,6 +1,5 @@
 package engine.actions;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.reporter.CustomLogger;
 import io.restassured.RestAssured;
@@ -13,8 +12,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.poi.ss.formula.functions.T;
 import io.restassured.path.json.JsonPath;
-import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -70,8 +69,10 @@ public class APIActions {
         }
         if (!(pathParam ==null)) {
             for (Map.Entry<String, String> entry : pathParam.entrySet()) {
-                url = url.replace("{" + entry.getKey() + "}", entry.getValue());
-//                requestSpecBuilder.addPathParams(entry.getKey(), entry.getValue());
+                String params = pathParam.values().stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining("/"));
+                url = url.endsWith("/") ? url + params : url + "/" + params;
                 CustomLogger.logger.info("set path parameters: {} -> {}",entry.getKey(), entry.getValue());
             }
         }
@@ -173,7 +174,7 @@ public class APIActions {
         Object user=null ;
         try{
             user = objectMapper.readValue(response.getBody().asString(), className);
-            CustomLogger.logger.info("read json from current response and serialize it into class [{}]",className );
+            CustomLogger.logger.info("read json from current response and deserialize it into class [{}]",className );
         }
         catch (Exception e){
             e.printStackTrace();
@@ -181,30 +182,22 @@ public class APIActions {
         return user;
     }
 
-    public static Object getSingleData(Object data,Class className){
-        if (data instanceof LinkedHashMap) {
-            return objectMapper.convertValue(data, className);
-        }
-        return null;
-    }
 
-    public static List<?> getDataInList(Object data,Class className){
-        if (data instanceof List) {
-            return ((List<?>) data).stream()
-                    .map(obj -> objectMapper.convertValue(obj, className))
-                    .collect(Collectors.toList());
-        }
-        return null;
-    }
 
-    public static <T> void assertTrue(T expected, T actual ){
-        if(expected!=null){
-        softAssert.assertEquals(actual, expected);
+    public static <T> void assertEquals(T expected, T actual ){
+        Boolean flag = false;
+            flag= expected.equals(actual);
+        if(flag ){
+            CustomLogger.logger.info("Value {} is equal to actual {}",expected,actual);
+        }
+        else {
+            CustomLogger.logger.info("Value {} is not equal to actual {}",expected,actual);
         }
     }
 
     public static int convertObjectIntoInt(Object data){
         if(data !=null){
+            CustomLogger.logger.info("Convert object into integer");
             return (Integer) data;
         }
         return 0;
