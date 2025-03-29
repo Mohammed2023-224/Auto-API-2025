@@ -1,7 +1,11 @@
 package engine.pojo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class User {
 
@@ -9,7 +13,7 @@ public class User {
     public int per_page;
     public int total;
     public int total_pages;
-    private List<UserData> data;
+    private Object data;
     public Support support;
 
 
@@ -45,8 +49,8 @@ public class User {
         this.total_pages = total_pages;
     }
 
-    public List<UserData> getData() { return data; }
-    public void setData(List<UserData> data) { this.data = data; }
+    public Object getData() { return data; }  // Can be a single object or a list
+    public void setData(Object data) { this.data = data; }
 
     public Support getSupport() {
         return support;
@@ -56,10 +60,24 @@ public class User {
         this.support = support;
     }
 
+    public UserData getSingleUserData() {
+        if (data instanceof LinkedHashMap) { // Ensure data is a Map (single user response)
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.convertValue(data, UserData.class); // Convert to UserData object
+        }
+        return null; // Re
+    }
 
-
-
-
+    public List<UserData> getUserList() {
+        // TODO deep understand this method
+        if (data instanceof List) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return ((List<?>) data).stream()
+                    .map(obj -> objectMapper.convertValue(obj, UserData.class)) // Convert LinkedHashMap to UserData
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
 
     public class Support{
         public String text ;

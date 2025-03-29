@@ -1,7 +1,6 @@
 package engine.actions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import engine.pojo.User;
 import engine.reporter.CustomLogger;
 import io.restassured.RestAssured;
 import io.restassured.authentication.AuthenticationScheme;
@@ -35,7 +34,6 @@ public class APIActions {
                                                         Map<String,String> pathParam,
                                                         String... auth){
         RequestSpecBuilder requestSpecBuilder=new RequestSpecBuilder();
-        requestSpecBuilder.setBaseUri(url);
         CustomLogger.logger.info("set base URL: {}",url);
         if(!(proxy ==null)){
             requestSpecBuilder.setProxy(proxy);
@@ -57,10 +55,12 @@ public class APIActions {
         }
         if (!(pathParam ==null)) {
             for (Map.Entry<String, String> entry : pathParam.entrySet()) {
-                requestSpecBuilder.addPathParams(entry.getKey(), entry.getValue());
+                url = url.replace("{" + entry.getKey() + "}", entry.getValue());
+//                requestSpecBuilder.addPathParams(entry.getKey(), entry.getValue());
                 CustomLogger.logger.info("set path parameters: {} -> {}",entry.getKey(), entry.getValue());
             }
         }
+        requestSpecBuilder.setBaseUri(url);
         return  requestSpecBuilder.build();
     }
 
@@ -134,34 +134,37 @@ public class APIActions {
     }
 
     public static Object getValueByPath(Response response, String path){
-        CustomLogger.logger.info("get value in path {}",path);
-        return getJsonPath(response).path(path);
+        CustomLogger.logger.info("get value in path [{}]",path);
+        return getResponse(response).path(path);
     }
 
     public static ArrayList<T> getArrayValueByPath(Response response, String path){
-        CustomLogger.logger.info("get array value in path {}",path);
-        return getJsonPath(response).path(path);
+        CustomLogger.logger.info("get array value in path [{}]",path);
+        return getResponse(response).path(path);
     }
 
-    public static ExtractableResponse<Response> getJsonPath(Response response){
+    public static ExtractableResponse<Response> getResponse(Response response){
         CustomLogger.logger.info("get full response");
         return response.then().extract();
     }
 
 
     public static JsonPath getFullJsonPath(Response response){
+        CustomLogger.logger.info("get only json path");
         return response.body().jsonPath();
     }
 
-    public static Object deserializeUser(Response response, Class className){
+    public static Object deserializeResponse(Response response, Class className){
         ObjectMapper objectMapper = new ObjectMapper();
         Object user=null ;
         try{
             user = objectMapper.readValue(response.getBody().asString(), className);
+            CustomLogger.logger.info("read json from current response and serialize it into class [{}]",className );
         }
         catch (Exception e){
             e.printStackTrace();
         }
         return user;
     }
+
 }
