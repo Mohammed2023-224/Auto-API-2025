@@ -1,21 +1,19 @@
 package engine.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import engine.actions.APIActions;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class User {
-
     public int page;
     public int per_page;
     public int total;
     public int total_pages;
     private Object data;
     public Support support;
-
 
     public int getPage() {
         return page;
@@ -61,22 +59,11 @@ public class User {
     }
 
     public UserData getSingleUserData() {
-        if (data instanceof LinkedHashMap) { // Ensure data is a Map (single user response)
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.convertValue(data, UserData.class); // Convert to UserData object
-        }
-        return null; // Re
+        return (UserData) APIActions.getSingleData(data,UserData.class);
     }
 
     public List<UserData> getUserList() {
-        // TODO deep understand this method
-        if (data instanceof List) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return ((List<?>) data).stream()
-                    .map(obj -> objectMapper.convertValue(obj, UserData.class)) // Convert LinkedHashMap to UserData
-                    .collect(Collectors.toList());
-        }
-        return null;
+        return (List<UserData>) APIActions.getDataInList(data, UserData.class);
     }
 
     public class Support{

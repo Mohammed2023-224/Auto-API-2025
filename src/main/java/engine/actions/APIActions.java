@@ -1,5 +1,6 @@
 package engine.actions;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.reporter.CustomLogger;
 import io.restassured.RestAssured;
@@ -12,13 +13,27 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.poi.ss.formula.functions.T;
 import io.restassured.path.json.JsonPath;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class APIActions {
     static ResponseSpecification  responseSpecification=RestAssured.expect();
+    private static final ObjectMapper objectMapper;
+    private static final SoftAssert softAssert;
+    static {
+        objectMapper=new ObjectMapper();
+        softAssert=new SoftAssert();
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
     // Get Actions
     public static Response performGetRequest(String url, Integer proxy,
                                              Map<String,String> headers, Map<String,String> queryParam
@@ -155,7 +170,6 @@ public class APIActions {
     }
 
     public static Object deserializeResponse(Response response, Class className){
-        ObjectMapper objectMapper = new ObjectMapper();
         Object user=null ;
         try{
             user = objectMapper.readValue(response.getBody().asString(), className);
@@ -167,4 +181,32 @@ public class APIActions {
         return user;
     }
 
+    public static Object getSingleData(Object data,Class className){
+        if (data instanceof LinkedHashMap) {
+            return objectMapper.convertValue(data, className);
+        }
+        return null;
+    }
+
+    public static List<?> getDataInList(Object data,Class className){
+        if (data instanceof List) {
+            return ((List<?>) data).stream()
+                    .map(obj -> objectMapper.convertValue(obj, className))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public static <T> void assertTrue(T expected, T actual ){
+        if(expected!=null){
+        softAssert.assertEquals(actual, expected);
+        }
+    }
+
+    public static int convertObjectIntoInt(Object data){
+        if(data !=null){
+            return (Integer) data;
+        }
+        return 0;
+    }
 }

@@ -25,17 +25,20 @@ public class APITests {
             System.out.println(header.getKey());
             System.out.println(header.getValue());
         }
-//        Assert.assertEquals((int) (Integer) APIActions.getValueByPath(res, "page"), 2);
+
+        APIActions.assertTrue( APIActions.convertObjectIntoInt(APIActions.getValueByPath(res, "page"))
+                , 2);
 
        User user= (User) APIActions.deserializeResponse(res, User.class);
-//       System.out.println(user.getPage());
-//       System.out.println(user.getUserList());
+       System.out.println(user.getPage());
+
+       System.out.println(user.getUserList());
     if(user.getSingleUserData()!=null && user.getUserList()==null){
-               System.out.println(user.getSingleUserData().toString());
+               System.out.println(user.getSingleUserData().getAvatar());
                System.out.println(user.getSingleUserData().getEmail());
     }
     if(user.getSingleUserData()==null && user.getUserList()!=null){
-//        System.out.println(user.getUserList().size());
+        System.out.println(user.getUserList().size());
         user.getUserList().forEach(userData -> System.out.println(userData.getEmail()));
 
     }
