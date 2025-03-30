@@ -1,19 +1,14 @@
 package engine.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import engine.actions.APIActions;
-
 import java.util.List;
 
 public class User {
-    public int page;
-    public int per_page;
-    public int total;
-    public int total_pages;
+    private int page;
+    private int per_page;
+    private int total;
+    private int total_pages;
     private Object data;
-    public Support support;
+    private Support support;
 
     public int getPage() {
         return page;
@@ -68,8 +63,8 @@ public class User {
 
 
     public class Support{
-        public String text ;
-        public String url ;
+        private String text ;
+        private String url ;
         public String getUrl() {
             return url;
         }
