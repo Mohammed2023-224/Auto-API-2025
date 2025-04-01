@@ -11,7 +11,7 @@
         <Selenium.version>4.28.1</Selenium.version>
         <TestNG.version>7.10.2</TestNG.version>
         <MavenSureFire.version>3.5.2</MavenSureFire.version>
-        <RestAssured.version>5.5.0</RestAssured.version>
+        <RestAssured.version>5.3.0</RestAssured.version>
         <Log4jAPI.version>3.0.0-beta2</Log4jAPI.version>
         <Log4jCore.version>3.0.0-beta2</Log4jCore.version>
         <Allure.version>2.29.1</Allure.version>
@@ -77,6 +77,7 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>${RestAssured.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.aventstack/chaintest-testng -->
         <dependency>
@@ -113,6 +114,19 @@
             <groupId>org.asynchttpclient</groupId>
             <artifactId>async-http-client</artifactId>
             <version>${asyncClient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.0</version> <!-- Use the latest version -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>5.5.1</version>
         </dependency>
     </dependencies>
 

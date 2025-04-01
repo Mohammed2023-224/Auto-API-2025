@@ -1,15 +1,28 @@
 package engine.api.actions;
 
+import com.sun.jna.platform.win32.DdemlUtil;
 import engine.gui.reporter.CustomLogger;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.internal.RestAssuredResponseImpl;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.BoundRequestBuilder;
+import org.asynchttpclient.Dsl;
+import org.asynchttpclient.ListenableFuture;
+import org.awaitility.Awaitility;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.*;
+
+import static engine.api.actions.APIHelpers.awaitHelper;
 
 public class APIRequestBuilder {
 
@@ -41,6 +54,51 @@ public class APIRequestBuilder {
         }
         return res;
     }
+    public CompletableFuture<Response> performAsyncRequest(String requestType,int waitTime,int pollTime, int statusCode){
+        CompletableFuture<Response> futureResponse = null;
+        switch (requestType){
+            case "get":
+                futureResponse=  CompletableFuture.supplyAsync(() ->
+                        RestAssured.given().spec(requestSpecBuilder.build()).when().get());
+                CustomLogger.logger.info("Start executing async get request");
+                    CompletableFuture.runAsync(()->awaitHelper(requestType,waitTime,pollTime,statusCode,requestSpecBuilder)
+                   );
+                break;
+            case "post":
+                futureResponse=  CompletableFuture.supplyAsync(() ->
+                        RestAssured.given().spec(requestSpecBuilder.build()).when().post());
+                CustomLogger.logger.info("Start executing async post request");
+                CompletableFuture.runAsync(()->
+                        awaitHelper(requestType,waitTime,pollTime,statusCode,requestSpecBuilder));
+                break;
+                case "put":
+                    futureResponse=  CompletableFuture.supplyAsync(() ->
+                            RestAssured.given().spec(requestSpecBuilder.build()).when().put());
+                    CustomLogger.logger.info("Start executing async put request");
+                    CompletableFuture.runAsync(()->
+                            awaitHelper(requestType,waitTime,pollTime,statusCode,requestSpecBuilder));
+                break;
+                case "patch":
+                    futureResponse=  CompletableFuture.supplyAsync(() ->
+                            RestAssured.given().spec(requestSpecBuilder.build()).when().patch());
+                    CustomLogger.logger.info("Start executing async patch request");
+                    CompletableFuture.runAsync(()->
+                            awaitHelper(requestType,waitTime,pollTime,statusCode,requestSpecBuilder));
+                break;
+                case "delete":
+                    futureResponse=  CompletableFuture.supplyAsync(() ->
+                            RestAssured.given().spec(requestSpecBuilder.build()).when().delete());
+                    CustomLogger.logger.info("Start executing async delete request");
+                    CompletableFuture.runAsync(()->
+                            awaitHelper(requestType,waitTime,pollTime,statusCode,requestSpecBuilder));
+                break;
+        }
+
+            return futureResponse;
+
+    }
+
+
 
 
     public void setURL(String url){
@@ -55,6 +113,9 @@ public class APIRequestBuilder {
     public void setHeaders(Map<String,String> headers){
         requestSpecBuilder.addHeaders(headers);
         CustomLogger.logger.info("set headers: {} ",headers.toString());
+    }
+
+    public void setRequestAsAsynchronous(Map<String,String> headers){
     }
 
     public void addQueryParams(Map<String,String> queryParams){
@@ -116,8 +177,7 @@ public class APIRequestBuilder {
     public void setBody(Object body){
         requestSpecBuilder.setBody(body);
         CustomLogger.logger.info("Set body as current object [{}]",body);
-
-    }
+}
 
 
 }

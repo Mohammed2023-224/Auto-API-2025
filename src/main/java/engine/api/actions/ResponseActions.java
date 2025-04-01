@@ -3,11 +3,13 @@ package engine.api.actions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.gui.reporter.CustomLogger;
 import io.restassured.http.Headers;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.apache.poi.ss.formula.functions.T;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -106,5 +108,7 @@ public class ResponseActions {
             CustomLogger.logger.info("Value {} is not equal to actual {}",expected,actual);
         }
     }
-
+    public static void validateJsonSchema(Response res,String filePath){
+        res.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(new File(filePath)));
+    }
 }
