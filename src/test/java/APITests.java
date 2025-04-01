@@ -1,8 +1,8 @@
-import engine.api.APIRequestBuilder;
-import engine.api.GetRequestOldWay;
-import engine.api.ResponseActions;
-import engine.constants.ReqresEndPoints;
-import engine.pojo.User;
+import com.google.gson.JsonObject;
+import engine.api.actions.APIRequestBuilder;
+import engine.api.actions.ResponseActions;
+import engine.gui.constants.ReqresEndPoints;
+import engine.api.pojo.User;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -58,6 +58,218 @@ public class APITests {
         user.getUserList().stream().forEach(userData -> {System.out.println(userData.getId() +" "+ userData.getEmail());
         } );
 
+    }
+
+    @Test
+    public void testNotFoundGetRequest(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/23");
+        Response res=apiRequestBuilder.performRequest("get");
+        ResponseActions.checkResponseStatus(res,404);
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+    @Test
+    public void testUnknownNotFoundGetRequest(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint+"/23");
+        Response res=apiRequestBuilder.performRequest("get");
+        ResponseActions.checkResponseStatus(res,404);
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testUnknownListGetRequest(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint);
+        Response res=apiRequestBuilder.performRequest("get");
+        ResponseActions.checkResponseStatus(res,200);
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"Application/json;");
+        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        int id=(Integer) ResponseActions.getValueByPath(res,"data.id[0]");
+        System.out.println(id+"test");
+        System.out.println(ResponseActions.getValueByPath(res,"data"));
+        System.out.println(ResponseActions.getAllHeaders(res));
+        User user = (User)ResponseActions.deserializeResponse(res,User.class);
+        System.out.println(user);
+        System.out.println(user.getSupport().getUrl());
+        System.out.println(user.getPage());
+        System.out.println(user.getUserList().size());
+        user.getUserList().stream().forEach(userData ->
+                System.out.println(userData.getId()+" "+userData.getYear()));
+        user.getUserList().stream().forEach(userData -> {System.out.println(userData.getId() +" "+ userData.getName());
+        } );
+    }
+    @Test
+    public void testUnknownGetRequest(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint+"/2");
+        Response res=apiRequestBuilder.performRequest("get");
+        ResponseActions.checkResponseStatus(res,200);
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"Application/json;");
+        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        int id=(Integer) ResponseActions.getValueByPath(res,"data.id");
+        System.out.println(id+"test");
+        System.out.println(ResponseActions.getValueByPath(res,"data"));
+        System.out.println(ResponseActions.getAllHeaders(res));
+        User user = (User)ResponseActions.deserializeResponse(res,User.class);
+        System.out.println(user);
+        System.out.println(user.getSupport().getUrl());
+        System.out.println(user.getPage());
+        System.out.println(user.getUserList());
+        System.out.println(user.getSingleUserData());
+        System.out.println(user.getSingleUserData().getColor());
+    }
+
+    @Test
+    public void testUserPostRequestWithString(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
+        apiRequestBuilder.setBodyAsString("{\"name\": \"morpheus\", \"job\": \"leader\"}");
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,201);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testUserPostRequestWithFile(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
+        apiRequestBuilder.setBodyAsFile("C:/Users/USER/Desktop/test.json");
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,201);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testUserPostRequestWithHashMap(){
+        LinkedHashMap<String,String> map=new LinkedHashMap<>();
+        map.put("name","mor");
+        map.put("job","leader");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
+        apiRequestBuilder.setBody(map);
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,201);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+
+    @Test
+    public void testUserPostRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("name","mor");
+        jo.addProperty("job","leader");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,201);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+    @Test
+    public void testUserPutRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("name","mor");
+        jo.addProperty("job","zion resident");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("put");
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+    @Test
+    public void testUserPatchRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("name","mor");
+        jo.addProperty("job","zion resident");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("patch");
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+    @Test
+    public void testUserDeleteRequest(){
+        apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
+        Response res=apiRequestBuilder.performRequest("delete");
+        ResponseActions.checkResponseStatus(res,204);
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testRegisterPostRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("email","eve.holt@reqres.in");
+        jo.addProperty("password","pistol");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testRegisterUnsuccessfulPostRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("email","eve.holt@reqres.in");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,400);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        System.out.println(ResponseActions.getValueByPath(res,"error"));
+        ResponseActions.logResponse(res);
+    }
+    @Test
+    public void testLoginPostRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("email","eve.holt@reqres.in");
+        jo.addProperty("password","cityslicka");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,200);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        ResponseActions.logResponse(res);
+    }
+
+    @Test
+    public void testLoginUnsuccessfulPostRequestWithJacksonObject(){
+        JsonObject jo=new JsonObject();
+        jo.addProperty("email","peter@klaven");
+        apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
+        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        Response res=apiRequestBuilder.performRequest("post");
+        ResponseActions.checkResponseStatus(res,400);
+        ResponseActions.checkResponseContent(res,"application/json");
+        System.out.println(ResponseActions.getResponse(res).statusCode());
+        System.out.println(ResponseActions.getValueByPath(res,"error"));
+        ResponseActions.logResponse(res);
     }
 
     @BeforeMethod

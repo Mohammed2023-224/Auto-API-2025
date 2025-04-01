@@ -1,8 +1,8 @@
 package pages.automationPlayGround;
 
-import engine.actions.BrowserActions;
-import engine.actions.ElementActions;
-import engine.constants.FrameWorkConstants;
+import engine.gui.actions.BrowserActions;
+import engine.gui.actions.ElementActions;
+import engine.gui.constants.FrameWorkConstants;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

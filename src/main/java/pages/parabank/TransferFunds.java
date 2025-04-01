@@ -1,7 +1,7 @@
 package pages.parabank;
 
-import engine.actions.ElementActions;
-import engine.actions.WaitActions;
+import engine.gui.actions.ElementActions;
+import engine.gui.actions.WaitActions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

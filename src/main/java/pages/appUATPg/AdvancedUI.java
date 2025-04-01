@@ -1,8 +1,7 @@
 package pages.appUATPg;
 
-import engine.actions.ElementActions;
+import engine.gui.actions.ElementActions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 

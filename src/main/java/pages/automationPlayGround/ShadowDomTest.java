@@ -1,11 +1,9 @@
 package pages.automationPlayGround;
 
-import engine.actions.ElementActions;
-import engine.reporter.CustomLogger;
+import engine.gui.actions.ElementActions;
+import engine.gui.reporter.CustomLogger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class ShadowDomTest {

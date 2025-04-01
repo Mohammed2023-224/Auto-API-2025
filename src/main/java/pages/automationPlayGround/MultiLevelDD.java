@@ -1,11 +1,9 @@
 package pages.automationPlayGround;
 
-import engine.actions.ElementActions;
-import engine.actions.WaitActions;
+import engine.gui.actions.ElementActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.ByAll;
-import org.testng.Assert;
 
 public class MultiLevelDD {
 private final WebDriver driver;

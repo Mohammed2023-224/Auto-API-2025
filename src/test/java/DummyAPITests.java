@@ -1,10 +1,10 @@
-import engine.reporter.CustomLogger;
+import engine.gui.reporter.CustomLogger;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.minidev.json.JSONObject;
 import org.testng.annotations.Test;
-import org.hamcrest.Matchers.*;
+
 import static org.hamcrest.Matchers.equalTo;
 
 public class DummyAPITests {

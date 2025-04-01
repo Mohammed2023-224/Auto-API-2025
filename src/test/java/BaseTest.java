@@ -1,6 +1,5 @@
-import engine.driverManager.SetupDriver;
-import engine.listeners.TestNGListeners;
-import engine.reporter.CustomLogger;
+import engine.gui.driverManager.SetupDriver;
+import engine.gui.listeners.TestNGListeners;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;

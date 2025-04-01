@@ -1,12 +1,11 @@
 package pages.appUATPg;
 
-import engine.actions.ElementActions;
-import engine.actions.SystemMethods;
-import engine.actions.WaitActions;
+import engine.gui.actions.ElementActions;
+import engine.gui.actions.SystemMethods;
+import engine.gui.actions.WaitActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class FormPage {

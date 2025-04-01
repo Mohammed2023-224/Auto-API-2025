@@ -16,6 +16,8 @@
         <Log4jCore.version>3.0.0-beta2</Log4jCore.version>
         <Allure.version>2.29.1</Allure.version>
         <ChainTest.version>1.0.6</ChainTest.version>
+        <asyncClient.version>3.0.1</asyncClient.version>
+        <gson.version>2.12.1</gson.version>
     </properties>
 
     <profiles></profiles>
@@ -104,7 +106,13 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.12.1</version>
+            <version>${gson.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client -->
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>${asyncClient.version}</version>
         </dependency>
     </dependencies>
 

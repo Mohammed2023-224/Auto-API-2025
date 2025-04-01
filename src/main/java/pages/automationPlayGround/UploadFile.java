@@ -1,7 +1,7 @@
 package pages.automationPlayGround;
 
-import engine.actions.ElementActions;
-import engine.actions.WaitActions;
+import engine.gui.actions.ElementActions;
+import engine.gui.actions.WaitActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;

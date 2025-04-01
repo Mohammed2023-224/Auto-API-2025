@@ -1,7 +1,6 @@
 package pages.automationPlayGround;
 
-import engine.actions.ElementActions;
-import engine.reporter.CustomLogger;
+import engine.gui.actions.ElementActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

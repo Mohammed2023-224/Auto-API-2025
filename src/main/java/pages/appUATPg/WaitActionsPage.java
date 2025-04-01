@@ -1,8 +1,8 @@
 package pages.appUATPg;
 
-import engine.actions.BrowserActions;
-import engine.actions.ElementActions;
-import engine.actions.WaitActions;
+import engine.gui.actions.BrowserActions;
+import engine.gui.actions.ElementActions;
+import engine.gui.actions.WaitActions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
