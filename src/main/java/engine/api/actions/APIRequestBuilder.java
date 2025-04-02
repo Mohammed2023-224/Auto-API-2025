@@ -1,6 +1,7 @@
 package engine.api.actions;
 
 import com.sun.jna.platform.win32.DdemlUtil;
+import engine.api.enums.HttpMethods;
 import engine.gui.reporter.CustomLogger;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -28,9 +29,9 @@ public class APIRequestBuilder {
 
     RequestSpecBuilder requestSpecBuilder =new RequestSpecBuilder();
 
-    public Response performRequest(String requestType){
+    public Response performRequest(HttpMethods requestType){
         Response res = null;
-        switch (requestType){
+        switch (requestType.getMethod()){
             case "get":
                 res= RestAssured.given().spec(requestSpecBuilder.build()).when().get();
                 CustomLogger.logger.info("Start executing get request");

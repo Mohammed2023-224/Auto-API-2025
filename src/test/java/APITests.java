@@ -2,7 +2,9 @@ import com.google.gson.JsonObject;
 import engine.api.actions.APIHelpers;
 import engine.api.actions.APIRequestBuilder;
 import engine.api.actions.ResponseActions;
-import engine.api.ReqresEndPoints;
+import engine.api.constants.ReqresEndPoints;
+import engine.api.enums.Headers;
+import engine.api.enums.HttpMethods;
 import engine.api.pojo.User;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
@@ -19,10 +21,11 @@ public class APITests {
     public void testGetRequestSingleUser(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
         apiRequestBuilder.addHeader("test","etsting");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(),
+                Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id");
         System.out.println(id);
         System.out.println(ResponseActions.getValueByPath(res,"data"));
@@ -41,10 +44,11 @@ public class APITests {
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.addQueryParams("page","2");
         apiRequestBuilder.addHeader("test","etsting");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res, Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod()
+                ,Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id[0]");
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
@@ -56,7 +60,6 @@ public class APITests {
         System.out.println(user.getUserList().size());
         user.getUserList().stream().forEach(userData ->
                 System.out.println(userData.getId()+" "+userData.getEmail()));
-
         user.getUserList().stream().forEach(userData -> {System.out.println(userData.getId() +" "+ userData.getEmail());
         } );
 
@@ -65,7 +68,7 @@ public class APITests {
     @Test
     public void testNotFoundGetRequest(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/23");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,404);
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
@@ -73,7 +76,7 @@ public class APITests {
     @Test
     public void testUnknownNotFoundGetRequest(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint+"/23");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,404);
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
@@ -82,12 +85,13 @@ public class APITests {
     @Test
     public void testUnknownListGetRequest(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint);
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(),
+                Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id[0]");
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
@@ -105,12 +109,12 @@ public class APITests {
     @Test
     public void testUnknownGetRequest(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.unknownEndPoint+"/2");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(), Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id");
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
@@ -129,9 +133,9 @@ public class APITests {
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.setBodyAsString("{\"name\": \"morpheus\", \"job\": \"leader\"}");
         apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -141,9 +145,9 @@ public class APITests {
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.setBodyAsFile("C:/Users/USER/Desktop/test.json");
         apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -155,10 +159,10 @@ public class APITests {
         map.put("job","leader");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.setBody(map);
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -171,10 +175,10 @@ public class APITests {
         jo.addProperty("job","leader");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -185,10 +189,10 @@ public class APITests {
         jo.addProperty("job","zion resident");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("put");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.PUT);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -199,17 +203,17 @@ public class APITests {
         jo.addProperty("job","zion resident");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("patch");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.PATCH);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
     @Test
     public void testUserDeleteRequest(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
-        Response res=apiRequestBuilder.performRequest("delete");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.DELETE);
         ResponseActions.checkResponseStatus(res,204);
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
@@ -222,10 +226,10 @@ public class APITests {
         jo.addProperty("password","pistol");
         apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -236,10 +240,10 @@ public class APITests {
         jo.addProperty("email","eve.holt@reqres.in");
         apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,400);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         System.out.println(ResponseActions.getValueByPath(res,"error"));
         ResponseActions.logResponse(res);
@@ -251,10 +255,10 @@ public class APITests {
         jo.addProperty("password","cityslicka");
         apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         ResponseActions.logResponse(res);
     }
@@ -265,10 +269,10 @@ public class APITests {
         jo.addProperty("email","peter@klaven");
         apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
         apiRequestBuilder.setBody(jo.toString());
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
-        Response res=apiRequestBuilder.performRequest("post");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,400);
-        ResponseActions.checkResponseContent(res,"application/json");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         System.out.println(ResponseActions.getResponse(res).statusCode());
         System.out.println(ResponseActions.getValueByPath(res,"error"));
         ResponseActions.logResponse(res);
@@ -279,10 +283,10 @@ public class APITests {
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.addQueryParams("delay","10");
         apiRequestBuilder.addHeader("test","etsting");
-        Response res=apiRequestBuilder.performRequest("get");
+        Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(), Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id[0]");
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
@@ -305,8 +309,8 @@ public class APITests {
         jo.addProperty("email","peter@klaven");
         apiRequestBuilder2.setPathParams(ReqresEndPoints.loginEndPoint);
         apiRequestBuilder2.setBody(jo.toString());
-        apiRequestBuilder2.setContentTypeAndAccept("application/json");
-        apiRequestBuilder2.performRequest("post");
+        apiRequestBuilder2.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
+        apiRequestBuilder2.performRequest(HttpMethods.POST);
     }
 
     @Test
@@ -321,8 +325,9 @@ public class APITests {
         Response fures2=APIHelpers.convertFutureResponseToResponse(res1);
         ResponseActions.checkResponseStatus(res,200);
         ResponseActions.checkResponseStatus(fures2,200);
-        ResponseActions.checkResponseContent(res,"Application/json;");
-        ResponseActions.checkResponseHeader(res,"Content-Type","application/json; charset=utf-8");
+        ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
+        ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(),
+                Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id[0]");
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
