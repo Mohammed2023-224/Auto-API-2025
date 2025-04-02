@@ -344,7 +344,7 @@ public class APITests {
         user.getUserList().stream().forEach(userData -> {System.out.println(userData.getId() +" "+ userData.getEmail());
         } );
         ResponseActions.logResponse(res);
-        ResponseActions.validateJsonSchema(res, FrameWorkConstants.schemasPath+"valid.json");
+        ResponseActions.validateJsonSchema(res, FrameWorkConstants.schemasPath+"/valid.json");
     }
 
     @BeforeMethod
