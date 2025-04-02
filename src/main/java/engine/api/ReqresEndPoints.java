@@ -1,4 +1,4 @@
-package engine.gui.constants;
+package engine.api;
 public class ReqresEndPoints {
     public static String mainURL="https://reqres.in/api/";
     public static String  usersEndPoint="users";
