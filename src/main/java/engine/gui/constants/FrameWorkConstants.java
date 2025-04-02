@@ -11,6 +11,8 @@ public class FrameWorkConstants {
     public static final String paraBankMainPage =PropertyReader.getProperty("paraBankLink");
     public static final String testPlayGroundMainPage =PropertyReader.getProperty("testAutomationPlayGroundLink");
     public static final String playGroundMainPage =PropertyReader.getProperty("QAPlayGroundLink");
-    public static final String robotMainPage =PropertyReader.getProperty("RobotFrameworkLink");
+    public static final String schemasPath =PropertyReader.getProperty("schemasPath");
+    public static final String payLoadPath =PropertyReader.getProperty("payloadFilesPath");
+
 
 }

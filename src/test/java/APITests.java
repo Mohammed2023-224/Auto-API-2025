@@ -6,6 +6,7 @@ import engine.api.constants.ReqresEndPoints;
 import engine.api.enums.Headers;
 import engine.api.enums.HttpMethods;
 import engine.api.pojo.User;
+import engine.gui.constants.FrameWorkConstants;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -143,8 +144,8 @@ public class APITests {
     @Test
     public void testUserPostRequestWithFile(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.setBodyAsFile("C:/Users/USER/Desktop/test.json");
-        apiRequestBuilder.setContentTypeAndAccept("application/json");
+        apiRequestBuilder.setBodyAsFile(FrameWorkConstants.payLoadPath+"/test.json");
+        apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
         ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
@@ -343,7 +344,7 @@ public class APITests {
         user.getUserList().stream().forEach(userData -> {System.out.println(userData.getId() +" "+ userData.getEmail());
         } );
         ResponseActions.logResponse(res);
-        ResponseActions.validateJsonSchema(res, "src/main/resources/Schemas/valid.json");
+        ResponseActions.validateJsonSchema(res, FrameWorkConstants.schemasPath+"valid.json");
     }
 
     @BeforeMethod
