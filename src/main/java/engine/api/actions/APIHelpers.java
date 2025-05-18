@@ -14,14 +14,21 @@ import java.util.concurrent.TimeUnit;
 public class APIHelpers {
 
     protected static int convertObjectIntoInt(Object data){
-        if(data !=null){
-            CustomLogger.logger.info("Convert object into integer");
-            return (Integer) data;
-        }
-        return 0;
+        int newData=0;
+            try{
+                newData= (Integer) data;
+                CustomLogger.logger.info("Convert object into integer");
+            }
+            catch (Exception e){
+                CustomLogger.logger.info("Can't Convert object into integer");
+            }
+        return newData;
     }
 
     protected static AuthenticationScheme setAuthorizationScheme(String... info){
+        /**
+            first string is always the type of authorization
+         **/
         if(info[0].equalsIgnoreCase("basic")){
             CustomLogger.logger.info("set basic authorization with user name {} and password {}",info[1],info[2]);
             return RestAssured.basic(info[1],info[2]);
@@ -39,7 +46,10 @@ public class APIHelpers {
         return null;
     }
 
-    protected static void awaitHelper(String requestType,int waitTime, int pollTime,int statusCode, RequestSpecBuilder req){
+    /**
+     Execute request and wait for it to end before continuing or the timeout to end
+     */
+    protected static void awaitHelperAsyncRequests(String requestType, int waitTime, int pollTime, int statusCode, RequestSpecBuilder req){
         Awaitility.await()
                 .atMost(waitTime, TimeUnit.SECONDS)
                 .pollInterval(pollTime, TimeUnit.SECONDS)

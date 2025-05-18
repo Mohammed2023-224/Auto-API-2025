@@ -43,7 +43,7 @@ public class APITests {
     @Test
     public void testGetRequestListUsers(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.addQueryParams("page","2");
+        apiRequestBuilder.addQueryParam("page","2");
         apiRequestBuilder.addHeader("test","etsting");
         Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
@@ -159,7 +159,7 @@ public class APITests {
         map.put("name","mor");
         map.put("job","leader");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.setBody(map);
+        apiRequestBuilder.setBodyAsObject(map);
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
@@ -175,7 +175,7 @@ public class APITests {
         jo.addProperty("name","mor");
         jo.addProperty("job","leader");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,201);
@@ -189,7 +189,7 @@ public class APITests {
         jo.addProperty("name","mor");
         jo.addProperty("job","zion resident");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.PUT);
         ResponseActions.checkResponseStatus(res,200);
@@ -203,7 +203,7 @@ public class APITests {
         jo.addProperty("name","mor");
         jo.addProperty("job","zion resident");
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.PATCH);
         ResponseActions.checkResponseStatus(res,200);
@@ -226,7 +226,7 @@ public class APITests {
         jo.addProperty("email","eve.holt@reqres.in");
         jo.addProperty("password","pistol");
         apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,200);
@@ -240,7 +240,7 @@ public class APITests {
         JsonObject jo=new JsonObject();
         jo.addProperty("email","eve.holt@reqres.in");
         apiRequestBuilder.setPathParams(ReqresEndPoints.registerEndPoint);
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,400);
@@ -255,7 +255,7 @@ public class APITests {
         jo.addProperty("email","eve.holt@reqres.in");
         jo.addProperty("password","cityslicka");
         apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,200);
@@ -269,7 +269,7 @@ public class APITests {
         JsonObject jo=new JsonObject();
         jo.addProperty("email","peter@klaven");
         apiRequestBuilder.setPathParams(ReqresEndPoints.loginEndPoint);
-        apiRequestBuilder.setBody(jo.toString());
+        apiRequestBuilder.setBodyAsObject(jo.toString());
         apiRequestBuilder.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
         ResponseActions.checkResponseStatus(res,400);
@@ -282,7 +282,7 @@ public class APITests {
     @Test
     public void testGetDelayedResponse(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.addQueryParams("delay","10");
+        apiRequestBuilder.addQueryParam("delay","10");
         apiRequestBuilder.addHeader("test","etsting");
         Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
@@ -309,7 +309,7 @@ public class APITests {
         JsonObject jo=new JsonObject();
         jo.addProperty("email","peter@klaven");
         apiRequestBuilder2.setPathParams(ReqresEndPoints.loginEndPoint);
-        apiRequestBuilder2.setBody(jo.toString());
+        apiRequestBuilder2.setBodyAsObject(jo.toString());
         apiRequestBuilder2.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         apiRequestBuilder2.performRequest(HttpMethods.POST);
     }
@@ -317,7 +317,7 @@ public class APITests {
     @Test
     public void tests(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
-        apiRequestBuilder.addQueryParams("delay","3");
+        apiRequestBuilder.addQueryParam("delay","3");
         apiRequestBuilder.addHeader("test","etsting");
         CompletableFuture<Response> fures=apiRequestBuilder.performAsyncRequest("get",9,1,200);
         CompletableFuture<Response> res1=apiRequestBuilder.performAsyncRequest("get",9,1,200);
