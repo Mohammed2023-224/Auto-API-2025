@@ -1,7 +1,6 @@
 package engine.api.enums;
 public enum HttpMethods {
-
-    POST("post")  ,
+    POST ("post")  ,
     GET ("get"),
     PUT ("put"),
     PATCH ("patch"),
@@ -11,8 +10,7 @@ public enum HttpMethods {
     public String getMethod() {
         return method;
     }
-    HttpMethods( String method) {
+    HttpMethods(String method) {
         this.method = method;
-
     }
 }

@@ -15,7 +15,7 @@ public class PojoHelpers {
         objectMapper=new ObjectMapper();
     }
 
-    protected static Object getSingleData(Object data, Class className){
+    protected static Object getSingleData(Object data, Class<?> className){
         if (data instanceof LinkedHashMap) {
             CustomLogger.logger.info("Convert linked hash object into object");
             return objectMapper.convertValue(data, className);
@@ -23,7 +23,7 @@ public class PojoHelpers {
         return null;
     }
 
-    protected static List<?> getDataInList(Object data, Class className){
+    protected static List<?> getDataInList(Object data, Class<?> className){
         if (data instanceof List) {
             CustomLogger.logger.info("Convert object into list");
             return ((List<?>) data).stream()

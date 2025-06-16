@@ -84,14 +84,14 @@ public class ResponseActions {
         return response.body().jsonPath();
     }
 
-    public static Object deserializeResponse(Response response, Class className){
+    public static Object deserializeResponse(Response response, Class<?> className){
         Object user=null ;
         try{
             user = objectMapper.readValue(response.getBody().asString(), className);
             CustomLogger.logger.info("read json from current response and deserialize it into class [{}]",className );
         }
         catch (Exception e){
-            e.printStackTrace();
+            CustomLogger.logger.info("Couldn't deserialize current response");
         }
         return user;
     }
@@ -99,9 +99,7 @@ public class ResponseActions {
 
 
     public static <T> void assertEquals(T expected, T actual ){
-        Boolean flag = false;
-        flag= expected.equals(actual);
-        if(flag ){
+        if( expected.equals(actual) ){
             CustomLogger.logger.info("Value {} is equal to actual {}",expected,actual);
         }
         else {

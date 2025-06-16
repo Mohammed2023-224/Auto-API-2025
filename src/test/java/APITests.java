@@ -8,6 +8,7 @@ import engine.api.enums.HttpMethods;
 import engine.api.pojo.User;
 import engine.gui.constants.FrameWorkConstants;
 import io.restassured.response.Response;
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,15 +20,17 @@ public class APITests {
     private APIRequestBuilder apiRequestBuilder;
 
     @Test
-    public void testGetRequestSingleUser(){
+    public void testGetRequestSingleUser(ITestContext context){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint+"/2");
         apiRequestBuilder.addHeader("test","etsting");
+        apiRequestBuilder.addHeader("x-api-key","reqres-free-v1");
         Response res=apiRequestBuilder.performRequest(HttpMethods.GET);
         ResponseActions.checkResponseStatus(res,200);
         ResponseActions.checkResponseContent(res,Headers.APPJSONHEADER.getMethod());
         ResponseActions.checkResponseHeader(res,Headers.CONTENTTYPE.getMethod(),
                 Headers.APPJSONHEADERCONTENTTYPE.getMethod());
         int id=(Integer) ResponseActions.getValueByPath(res,"data.id");
+        context.setAttribute("ID",id);
         System.out.println(id);
         System.out.println(ResponseActions.getValueByPath(res,"data"));
         System.out.println(ResponseActions.getAllHeaders(res));
@@ -42,6 +45,7 @@ public class APITests {
 
     @Test
     public void testGetRequestListUsers(){
+
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
         apiRequestBuilder.addQueryParam("page","2");
         apiRequestBuilder.addHeader("test","etsting");
@@ -97,7 +101,7 @@ public class APITests {
         System.out.println(id+"test");
         System.out.println(ResponseActions.getValueByPath(res,"data"));
         System.out.println(ResponseActions.getAllHeaders(res));
-        User user = (User)ResponseActions.deserializeResponse(res,User.class);
+        User user = (User) ResponseActions.deserializeResponse(res,User.class);
         System.out.println(user);
         System.out.println(user.getSupport().getUrl());
         System.out.println(user.getPage());
@@ -132,6 +136,7 @@ public class APITests {
     @Test
     public void testUserPostRequestWithString(){
         apiRequestBuilder.setPathParams(ReqresEndPoints.usersEndPoint);
+        apiRequestBuilder.addHeader("x-api-key","reqres-free-v1");
         apiRequestBuilder.setBodyAsString("{\"name\": \"morpheus\", \"job\": \"leader\"}");
         apiRequestBuilder.setContentTypeAndAccept("application/json");
         Response res=apiRequestBuilder.performRequest(HttpMethods.POST);
@@ -305,7 +310,6 @@ public class APITests {
 
         APIRequestBuilder apiRequestBuilder2=new APIRequestBuilder();
         apiRequestBuilder2.setURL(ReqresEndPoints.mainURL);
-
         JsonObject jo=new JsonObject();
         jo.addProperty("email","peter@klaven");
         apiRequestBuilder2.setPathParams(ReqresEndPoints.loginEndPoint);
@@ -313,6 +317,7 @@ public class APITests {
         apiRequestBuilder2.setContentTypeAndAccept(Headers.APPJSONHEADER.getMethod());
         apiRequestBuilder2.performRequest(HttpMethods.POST);
     }
+
 
     @Test
     public void tests(){

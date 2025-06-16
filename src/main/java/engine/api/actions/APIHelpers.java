@@ -3,13 +3,10 @@ package engine.api.actions;
 import engine.gui.reporter.CustomLogger;
 import io.restassured.RestAssured;
 import io.restassured.authentication.AuthenticationScheme;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
-import org.awaitility.Awaitility;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class APIHelpers {
 
@@ -25,10 +22,10 @@ public class APIHelpers {
         return newData;
     }
 
+    /**
+     first string is always the type of authorization
+     **/
     protected static AuthenticationScheme setAuthorizationScheme(String... info){
-        /**
-            first string is always the type of authorization
-         **/
         if(info[0].equalsIgnoreCase("basic")){
             CustomLogger.logger.info("set basic authorization with user name {} and password {}",info[1],info[2]);
             return RestAssured.basic(info[1],info[2]);
@@ -46,78 +43,15 @@ public class APIHelpers {
         return null;
     }
 
-    /**
-     Execute request and wait for it to end before continuing or the timeout to end
-     */
-    protected static void awaitHelperAsyncRequests(String requestType, int waitTime, int pollTime, int statusCode, RequestSpecBuilder req){
-        Awaitility.await()
-                .atMost(waitTime, TimeUnit.SECONDS)
-                .pollInterval(pollTime, TimeUnit.SECONDS)
-                .until(() -> {
-                    Response asyncRes;
-                    switch (requestType.toLowerCase()) {
-                        case "get":
-                            asyncRes = RestAssured.given()
-                                    .spec(req.build())
-                                    .when()
-                                    .get()
-                                    .then()
-                                    .extract()
-                                    .response();
-                            break;
-                        case "post":
-                            asyncRes = RestAssured.given()
-                                    .spec(req.build())
-                                    .when()
-                                    .post()
-                                    .then()
-                                    .extract()
-                                    .response();
-                            break;
-                        case "put":
-                            asyncRes = RestAssured.given()
-                                    .spec(req.build())
-                                    .when()
-                                    .put()
-                                    .then()
-                                    .extract()
-                                    .response();
-                            break;
-                        case "patch":
-                            asyncRes = RestAssured.given()
-                                    .spec(req.build())
-                                    .when()
-                                    .patch()
-                                    .then()
-                                    .extract()
-                                    .response();
-                            break;
-                        case "delete":
-                            asyncRes = RestAssured.given()
-                                    .spec(req.build())
-                                    .when()
-                                    .delete()
-                                    .then()
-                                    .extract()
-                                    .response();
-                            break;
-                        default:
-                            throw new IllegalArgumentException("Unsupported request type: " + requestType);
-                    }
-                    return asyncRes.getStatusCode() == statusCode;
-                });
-    }
 
     public static Response convertFutureResponseToResponse(CompletableFuture<Response> res){
         Response response;
         try {
             response = res.get();
-            CustomLogger.logger.info("Cast type into response type");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
+            CustomLogger.logger.info("Cast future response into response type");
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
-    return response;
+        return response;
         }
 }

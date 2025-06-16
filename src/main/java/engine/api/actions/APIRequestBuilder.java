@@ -36,14 +36,14 @@ public class APIRequestBuilder {
     }
 
     public Response performRequest(HttpMethods requestType) {
-        CustomLogger.logger.info("Start executing sync " + requestType.getMethod() + " request");
+        CustomLogger.logger.info("Start executing sync {} request", requestType.getMethod());
         return sendRequest(requestType.getMethod());
     }
 
 
     public CompletableFuture<Response> performAsyncRequest(String requestType, int waitTime, int pollTime, int statusCode) {
         return CompletableFuture.supplyAsync(() -> {
-            CustomLogger.logger.info("Start executing async " + requestType + " request");
+            CustomLogger.logger.info("Start executing async {} request", requestType);
             final Response[] finalResponse = {null};
             Awaitility.await()
                     .atMost(waitTime, TimeUnit.SECONDS)
@@ -110,10 +110,11 @@ public class APIRequestBuilder {
         CustomLogger.logger.info("Add header [{}] -> [{}]",headerName,headerValue);
     }
 
-    public void setContentTypeAndAccept(String  contentType){
+    public void setContentTypeAndAccept(String contentType){
         requestSpecBuilder.setContentType(contentType).setAccept(contentType);
         CustomLogger.logger.info("Set content type to [{}]",contentType);
     }
+
     public void setBodyAsFile(String filePath){
         try {
             requestSpecBuilder.setBody(Files.readAllBytes(Paths.get(filePath)));
@@ -122,7 +123,6 @@ public class APIRequestBuilder {
             CustomLogger.logger.info("couldn't set body as file located at [{}]", filePath);
             throw new RuntimeException(e);
         }
-
     }
 
     public void setBodyAsString(String body){
